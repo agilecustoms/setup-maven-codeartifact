@@ -19,13 +19,13 @@ runs:
         aws-region: us-east-1
         role-to-assume: arn:aws:iam::${{inputs.AWS_ACCOUNT}}:role/ci/builder
 
-#    - name: Setup Java
-#      uses: actions/setup-java@v4
-#      with:
-#        java-version: '21'
-#        distribution: 'corretto'
-#        cache: maven
-#
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'corretto'
+        cache: maven
+
 #    - name: Generate CodeArtifact token
 #      shell: bash
 #      run: |
