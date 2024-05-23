@@ -1,0 +1,35 @@
+name: 'Prepare for Build'
+description: 'AWS login, get CodeArtifact token, setup Java and Maven'
+#inputs:
+#  AWS_ACCOUNT:
+#    description: 'AWS account number where the CodeArtifact domain is located'
+#    required: true
+#    default: '401861661880'
+#outputs:
+#  random-number:
+#    description: "Random number"
+#    value: ${{ steps.random-number-generator.outputs.random-number }}
+runs:
+  using: "composite"
+  steps:
+    - name: test
+      run: echo "Hello world"
+#    - name: Configure AWS credentials
+#      uses: aws-actions/configure-aws-credentials@v4
+#      with:
+#        audience: sts.amazonaws.com
+#        aws-region: us-east-1
+#        role-to-assume: ${{ env.AWS_ROLE_BUILDER }}
+#
+#    - name: Setup Java
+#      uses: actions/setup-java@v4
+#      with:
+#        java-version: '21'
+#        distribution: 'corretto'
+#        cache: maven
+#
+#    - name: Generate CodeArtifact token
+#      run: |
+#        TOKEN=`aws codeartifact get-authorization-token --domain agilecustoms --domain-owner $INPUT_AWS_ACCOUNT --query authorizationToken --output text`
+#        echo "::add-mask::$TOKEN"
+#        echo "CODEARTIFACT_AUTH_TOKEN=$TOKEN" >> $GITHUB_ENV
