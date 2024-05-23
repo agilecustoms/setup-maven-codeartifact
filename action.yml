@@ -8,6 +8,8 @@ inputs:
 runs:
   using: "composite"
   steps:
+    # receives a JWT from the GitHub OIDC provider, and then requests an access token from AWS
+    # as result we got env vars: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_SESSION_TOKEN
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
@@ -20,7 +22,7 @@ runs:
       with:
         java-version: '21'
         distribution: 'corretto'
-        cache: maven
+        cache: maven # this will give cache inheritance and such cache hit and quick builds on feature branches/PRs
 
     - name: Generate CodeArtifact token
       shell: bash
