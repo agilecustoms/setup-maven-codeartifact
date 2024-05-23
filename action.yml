@@ -26,9 +26,9 @@ runs:
         distribution: 'corretto'
         cache: maven
 
-#    - name: Generate CodeArtifact token
-#      shell: bash
-#      run: |
-#        TOKEN=`aws codeartifact get-authorization-token --domain agilecustoms --domain-owner $INPUT_AWS_ACCOUNT --query authorizationToken --output text`
-#        echo "::add-mask::$TOKEN"
-#        echo "CODEARTIFACT_AUTH_TOKEN=$TOKEN" >> $GITHUB_ENV
+    - name: Generate CodeArtifact token
+      shell: bash
+      run: |
+        TOKEN=`aws codeartifact get-authorization-token --domain agilecustoms --domain-owner ${{inputs.AWS_ACCOUNT}} --query authorizationToken --output text`
+        echo "::add-mask::$TOKEN"
+        echo "CODEARTIFACT_AUTH_TOKEN=$TOKEN" >> $GITHUB_ENV
