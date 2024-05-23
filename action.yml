@@ -14,6 +14,7 @@ runs:
   steps:
     - name: test
       run: echo "Hello world"
+      shell: bash
 #    - name: Configure AWS credentials
 #      uses: aws-actions/configure-aws-credentials@v4
 #      with:
