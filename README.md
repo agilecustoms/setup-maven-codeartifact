@@ -7,6 +7,6 @@
 
 ## Release
 ```shell
-git tag -a -m "Description of this release" v1
+git tag -a -m "Release description: use shared account from org env variables" v2.0.0
 git push --follow-tags
 ```
