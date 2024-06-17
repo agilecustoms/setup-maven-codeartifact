@@ -4,7 +4,6 @@ inputs:
   AWS_ACCOUNT:
     description: 'AWS account number where the CodeArtifact domain is located'
     required: true
-    default: '401861661880'
 runs:
   using: "composite"
   steps:
