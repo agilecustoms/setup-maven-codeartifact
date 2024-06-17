@@ -1,22 +1,8 @@
 name: 'Prepare for Build'
-description: 'AWS login, get CodeArtifact token, setup Java and Maven'
-inputs:
-  AWS_ACCOUNT:
-    description: 'AWS account number where the CodeArtifact domain is located'
-    required: true
-    default: '401861661880'
+description: 'Setup java + maven, login to AWS and generate CodeArtifact token'
 runs:
   using: "composite"
   steps:
-    # receives a JWT from the GitHub OIDC provider, and then requests an access token from AWS
-    # as result we got env vars: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_SESSION_TOKEN
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        audience: sts.amazonaws.com
-        aws-region: us-east-1
-        role-to-assume: arn:aws:iam::${{inputs.AWS_ACCOUNT}}:role/ci/builder
-
     - name: Setup Java
       uses: actions/setup-java@v4
       with:
@@ -24,9 +10,18 @@ runs:
         distribution: 'corretto'
         cache: maven # this will give cache inheritance and such cache hit and quick builds on feature branches/PRs
 
+    # receives a JWT from the GitHub OIDC provider, and then requests an access token from AWS
+    # as result we got env vars: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_SESSION_TOKEN
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        audience: sts.amazonaws.com
+        aws-region: us-east-1
+        role-to-assume: arn:aws:iam::${{ vars.AWS_ACCOUNT_SHARED }}:role/ci/builder
+
     - name: Generate CodeArtifact token
       shell: bash
       run: |
-        TOKEN=`aws codeartifact get-authorization-token --domain agilecustoms --domain-owner ${{inputs.AWS_ACCOUNT}} --query authorizationToken --output text`
+        TOKEN=`aws codeartifact get-authorization-token --domain agilecustoms --domain-owner ${{ vars.AWS_ACCOUNT_SHARED }} --query authorizationToken --output text`
         echo "::add-mask::$TOKEN"
         echo "CODEARTIFACT_AUTH_TOKEN=$TOKEN" >> $GITHUB_ENV
