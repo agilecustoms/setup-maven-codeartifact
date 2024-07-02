@@ -19,7 +19,6 @@ runs:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        audience: sts.amazonaws.com
         aws-region: us-east-1
         role-to-assume: arn:aws:iam::${{ inputs.AWS_ACCOUNT }}:role/ci/builder
 
