@@ -52,7 +52,7 @@ runs:
             {
               "id": "agilecustoms-maven",
               "username": "aws",
-              "password": "${{ steps.codeartifact.outputs.TOKEN }}",
+              "password": "${{ steps.codeartifact.outputs.TOKEN }}"
             }
           ]
         repositories: >
@@ -74,11 +74,11 @@ runs:
           [
             {
               "id": "central",
-              "url": "https://central.maven.org/maven2/",
+              "url": "https://central.maven.org/maven2/"
             },
             {
               "id": "mirror",
-              "url": "https://repo1.maven.org/maven2/",
+              "url": "https://repo1.maven.org/maven2/"
             },
             {
               "id": "agilecustoms-maven",
