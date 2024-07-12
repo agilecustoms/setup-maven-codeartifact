@@ -37,8 +37,11 @@ runs:
       #  so it is additionally put in env variable 'ARTIFACT_STORE_URL', see pom.xml files in 'java-parent' repos
 
     - name: Setup Maven settings.xml
-      id: maven_settings
       uses: s4u/maven-settings-action@v3.0.0
       with:
         servers: '[{"id": "agilecustoms-maven", "username": "aws", "password": "${{ steps.codeartifact.outputs.TOKEN }}"}]'
         repositories: '[{"id":"agilecustoms-maven","url":"${{ steps.codeartifact.outputs.URL }}"}]'
+
+#    - name: Debug
+#      shell: bash
+#      run: cat /home/runner/.m2/settings.xml # see sample.settings.xml
