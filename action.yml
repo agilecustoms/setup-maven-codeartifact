@@ -30,7 +30,7 @@ runs:
         TOKEN=`aws codeartifact get-authorization-token --domain $domain --domain-owner ${{ inputs.AWS_ACCOUNT }} --query authorizationToken --output text`
         echo "::add-mask::$TOKEN"
         echo "TOKEN=$TOKEN" >> $GITHUB_OUTPUT
-        URL="https://$domain-${{ inputs.AWS_ACCOUNT }}.d.codeartifact.us-east-1.amazonaws.com/maven/maven/"
+        URL="https://$domain-${{ inputs.AWS_ACCOUNT }}.d.codeartifact.us-east-1.amazonaws.com"
         echo "URL=$URL" >> $GITHUB_OUTPUT
         echo "ARTIFACT_STORE_URL=$URL" >> $GITHUB_ENV
       # TOKEN used only in settings.xml file, while URL is used both in settings.xml AND parent pom.xml 'distributionManagement'
@@ -40,7 +40,7 @@ runs:
       uses: s4u/maven-settings-action@v3.0.0
       with:
         servers: '[{"id": "agilecustoms-maven", "username": "aws", "password": "${{ steps.codeartifact.outputs.TOKEN }}"}]'
-        repositories: '[{"id":"agilecustoms-maven","url":"${{ steps.codeartifact.outputs.URL }}"}]'
+        repositories: '[{"id":"agilecustoms-maven","url":"${{ steps.codeartifact.outputs.URL }}/maven/maven"}]'
 
 #    - name: Debug
 #      shell: bash
