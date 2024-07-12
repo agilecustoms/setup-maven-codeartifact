@@ -16,11 +16,11 @@ runs:
 
     # receives a JWT from the GitHub OIDC provider, and then requests an access token from AWS
     # as result we got env vars: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_SESSION_TOKEN
-#    - name: Login AWS
-#      uses: aws-actions/configure-aws-credentials@v4
-#      with:
-#        aws-region: us-east-1
-#        role-to-assume: arn:aws:iam::${{ inputs.AWS_ACCOUNT }}:role/ci/builder
+    - name: Login AWS
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: us-east-1
+        role-to-assume: arn:aws:iam::${{ inputs.AWS_ACCOUNT }}:role/ci/builder
 
     - name: Generate CodeArtifact token and url
       id: codeartifact
