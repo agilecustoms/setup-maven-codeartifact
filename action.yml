@@ -90,6 +90,6 @@ runs:
             "github"
           ]
 
-    - name: Debug
-      shell: bash
-      run: cat /home/runner/.m2/settings.xml # see sample.settings.xml
+#    - name: Debug
+#      shell: bash
+#      run: cat /home/runner/.m2/settings.xml # see sample.settings.xml
