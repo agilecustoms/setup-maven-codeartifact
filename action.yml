@@ -36,12 +36,60 @@ runs:
       # TOKEN used only in settings.xml file, while URL is used both in settings.xml AND parent pom.xml 'distributionManagement'
       #  so it is additionally put in env variable 'ARTIFACT_STORE_URL', see pom.xml files in 'java-parent' repos
 
-    - name: Setup Maven settings.xml
-      uses: s4u/maven-settings-action@v3.0.0
-      with:
-        servers: '[{"id": "agilecustoms-maven", "username": "aws", "password": "${{ steps.codeartifact.outputs.TOKEN }}"}]'
-        repositories: '[{"id":"agilecustoms-maven","url":"${{ steps.codeartifact.outputs.URL }}/maven/maven"}]'
+    # First action I tried. I doesn't support pluginRepositories
+#    - name: Setup Maven settings.xml
+#      uses: s4u/maven-settings-action@v3.0.0
+#      with:
+#        servers: '[{"id": "agilecustoms-maven", "username": "aws", "password": "${{ steps.codeartifact.outputs.TOKEN }}"}]'
+#        repositories: '[{"id":"agilecustoms-maven","url":"${{ steps.codeartifact.outputs.URL }}/maven/maven"}]'
 
-#    - name: Debug
-#      shell: bash
-#      run: cat /home/runner/.m2/settings.xml # see sample.settings.xml
+    # There is not setting how to call resulting profile (it is always "github"), but there is a setting to activate it (active_profiles)
+    - name: Setup Maven settings.xml
+      uses: whelk-io/maven-settings-xml-action@v22
+      with:
+        servers: >
+          [
+            {
+              "id": "agilecustoms-maven",
+              "username": "aws",
+              "password": "${{ steps.codeartifact.outputs.TOKEN }}",
+            }
+          ]
+        repositories: >
+          [
+            {
+              "id": "central",
+              "url": "https://central.maven.org/maven2/"
+            },
+            {
+              "id": "mirror",
+              "url": "https://repo1.maven.org/maven2/"
+            },
+            {
+              "id": "agilecustoms-maven",
+              "url": "${{ steps.codeartifact.outputs.URL }}/maven/maven/"
+            }
+          ]
+        plugin_repositories: >
+          [
+            {
+              "id": "central",
+              "url": "https://central.maven.org/maven2/",
+            },
+            {
+              "id": "mirror",
+              "url": "https://repo1.maven.org/maven2/",
+            },
+            {
+              "id": "agilecustoms-maven",
+              "url": "${{ steps.codeartifact.outputs.URL }}/maven/maven/"
+            }
+          ]
+        active_profiles: >
+          [
+            "github"
+          ]
+
+    - name: Debug
+      shell: bash
+      run: cat /home/runner/.m2/settings.xml # see sample.settings.xml
