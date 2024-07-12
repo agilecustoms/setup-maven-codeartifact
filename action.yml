@@ -16,15 +16,29 @@ runs:
 
     # receives a JWT from the GitHub OIDC provider, and then requests an access token from AWS
     # as result we got env vars: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_SESSION_TOKEN
-    - name: Configure AWS credentials
+    - name: Login AWS
       uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-region: us-east-1
         role-to-assume: arn:aws:iam::${{ inputs.AWS_ACCOUNT }}:role/ci/builder
 
-    - name: Generate CodeArtifact token
+    - name: Generate CodeArtifact token and url
+      id: codeartifact
       shell: bash
       run: |
-        TOKEN=`aws codeartifact get-authorization-token --domain agilecustoms --domain-owner ${{ inputs.AWS_ACCOUNT }} --query authorizationToken --output text`
+        domain=agilecustoms
+        TOKEN=`aws codeartifact get-authorization-token --domain $domain --domain-owner ${{ inputs.AWS_ACCOUNT }} --query authorizationToken --output text`
         echo "::add-mask::$TOKEN"
-        echo "CODEARTIFACT_AUTH_TOKEN=$TOKEN" >> $GITHUB_ENV
+        echo "TOKEN=$TOKEN" >> $GITHUB_OUTPUT
+        URL="https://$domain-${{ inputs.AWS_ACCOUNT }}.d.codeartifact.us-east-1.amazonaws.com/maven/maven/"
+        echo "URL=$URL" >> $GITHUB_OUTPUT
+        echo "ARTIFACT_STORE_URL=$URL" >> $GITHUB_ENV
+      # TOKEN used only in settings.xml file, while URL is used both in settings.xml AND parent pom.xml 'distributionManagement'
+      #  so it is additionally put in env variable 'ARTIFACT_STORE_URL', see pom.xml files in 'java-parent' repos
+
+    - name: Setup Maven settings.xml
+      id: maven_settings
+      uses: s4u/maven-settings-action@v3.0.0
+      with:
+        servers: '[{"id": "agilecustoms-maven", "username": "aws", "password": "${{ steps.codeartifact.outputs.TOKEN }}"}]'
+        repositories: '[{"id":"agilecustoms-maven","url":"${{ steps.codeartifact.outputs.URL }}"}]'

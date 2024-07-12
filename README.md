@@ -1,15 +1,14 @@
-# prepare-java-build
-Reusable GitHub Action `prepare-java-build`
+# About
+Reusable GitHub Action `prepare-java`
 1. Setup Java + Maven
-2. Login to AWS with role "deployer" in shared account
-3. Generate CodeArtifact token, so Maven can download dependencies
+2. Login to AWS Account "Shared" with role "deployer"
+3. Generate CodeArtifact token and URL and put in env variables
+4. Forge `settings.xml` and put in a place where Maven can find it
 
-## Configure access (one time)
-1. Go to repository settings
-2. In the left sidebar, click  Actions, then click General
-3. Under Access, choose one of the access settings:
-- Accessible from repositories in the 'agilecustoms' organization
-4. Click Save to apply the settings
+## Test
+```shell
+act -s GITHUB_TOKEN=$GITHUB_TOKEN -j {step}
+```
 
 ## Release
 ```shell
