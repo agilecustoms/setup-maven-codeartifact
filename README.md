@@ -7,7 +7,7 @@ Reusable GitHub Action `prepare-java`
 
 ## Test
 ```shell
-act -s GITHUB_TOKEN=$GITHUB_TOKEN -j {step}
+act -s GITHUB_TOKEN=$GITHUB_TOKEN -j Test --container-architecture linux/amd64
 ```
 
 ## Release
