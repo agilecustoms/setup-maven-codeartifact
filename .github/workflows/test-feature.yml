@@ -9,8 +9,8 @@ jobs:
   Test:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write # to request JWT from GitHub OIDC provider (used in 'gha-prepare-java-build' action)
-      contents: read # required for actions/checkout
+      id-token: write
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4

@@ -26,7 +26,6 @@ runs:
       id: codeartifact
       shell: bash
       run: |
-        aws sts get-caller-identity
         domain=agilecustoms
         TOKEN=`aws codeartifact get-authorization-token --domain $domain --domain-owner ${{ inputs.AWS_ACCOUNT }} --query authorizationToken --output text`
         echo "::add-mask::$TOKEN"
