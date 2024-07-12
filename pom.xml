@@ -6,5 +6,5 @@
     <artifactId>gha-prepare-java</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
-    <description>Hello world pom.xml file just to satisfy GitHub action 'setup-java' in workflows/test</description>
+    <description>Hello world pom.xml file just to satisfy GitHub action 'setup-java' in workflows/test-feature</description>
 </project>
