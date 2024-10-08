@@ -14,6 +14,10 @@ runs:
         distribution: 'corretto'
         cache: maven # this will give cache inheritance and such cache hit and quick builds on feature branches/PRs
 
+    - name: Info
+      shell: bash
+      run: mvn -v
+
     # receives a JWT from the GitHub OIDC provider, and then requests an access token from AWS
     # as result we got env vars: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_SESSION_TOKEN
     - name: Login AWS
@@ -43,7 +47,7 @@ runs:
 #        servers: '[{"id": "agilecustoms-maven", "username": "aws", "password": "${{ steps.codeartifact.outputs.TOKEN }}"}]'
 #        repositories: '[{"id":"agilecustoms-maven","url":"${{ steps.codeartifact.outputs.URL }}/maven/maven"}]'
 
-    # There is not setting how to call resulting profile (it is always "github"), but there is a setting to activate it (active_profiles)
+    # There is no setting how to call resulting profile (it is always "github"), but there is a setting to activate it (active_profiles)
     - name: Setup Maven settings.xml
       uses: whelk-io/maven-settings-xml-action@v22
       with:
