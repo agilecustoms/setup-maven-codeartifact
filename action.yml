@@ -1,4 +1,4 @@
-name: 'Prepare for Build'
+name: 'Prepare Java'
 description: 'Setup java + maven, login to AWS and generate CodeArtifact token'
 inputs:
   AWS_ACCOUNT:
@@ -31,7 +31,7 @@ runs:
       shell: bash
       run: |
         domain=agilecustoms
-        TOKEN=`aws codeartifact get-authorization-token --domain $domain --domain-owner ${{ inputs.AWS_ACCOUNT }} --query authorizationToken --output text`
+        TOKEN=`aws codeartifact get-authorization-token --domain $domain --query authorizationToken --output text`
         echo "::add-mask::$TOKEN"
         echo "TOKEN=$TOKEN" >> $GITHUB_OUTPUT
         URL="https://$domain-${{ inputs.AWS_ACCOUNT }}.d.codeartifact.us-east-1.amazonaws.com"

@@ -1,7 +1,7 @@
 # About
 Reusable GitHub Action `prepare-java`
 1. Setup Java + Maven
-2. Login to AWS Account "Shared" with role "deployer"
+2. Login to AWS Account "Shared" with role "builder"
 3. Generate CodeArtifact token and URL and put in env variables
 4. Forge `settings.xml` and put in a place where Maven can find it
 
