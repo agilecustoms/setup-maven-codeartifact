@@ -34,19 +34,13 @@ runs:
         TOKEN=`aws codeartifact get-authorization-token --domain $domain --query authorizationToken --output text`
         echo "::add-mask::$TOKEN"
         echo "TOKEN=$TOKEN" >> $GITHUB_OUTPUT
-        URL="https://$domain-${{ inputs.AWS_ACCOUNT }}.d.codeartifact.us-east-1.amazonaws.com"
-        echo "URL=$URL" >> $GITHUB_OUTPUT
-        echo "ARTIFACT_STORE_URL=$URL" >> $GITHUB_ENV
-      # TOKEN used only in settings.xml file, while URL is used both in settings.xml AND parent pom.xml 'distributionManagement'
+        HOST="$domain-${{ inputs.AWS_ACCOUNT }}.d.codeartifact.us-east-1.amazonaws.com"
+        echo "HOST=$HOST" >> $GITHUB_OUTPUT
+        echo "ARTIFACT_STORE_HOST=$HOST" >> $GITHUB_ENV
+      # TOKEN used only in settings.xml file, while HOST is used both in settings.xml AND parent pom.xml 'distributionManagement'
       #  so it is additionally put in env variable 'ARTIFACT_STORE_URL', see pom.xml files in 'java-parent' repos
 
-    # First action I tried. I doesn't support pluginRepositories
-#    - name: Setup Maven settings.xml
-#      uses: s4u/maven-settings-action@v3.0.0
-#      with:
-#        servers: '[{"id": "agilecustoms-maven", "username": "aws", "password": "${{ steps.codeartifact.outputs.TOKEN }}"}]'
-#        repositories: '[{"id":"agilecustoms-maven","url":"${{ steps.codeartifact.outputs.URL }}/maven/maven"}]'
-
+    # First I tried "s4u/maven-settings-action@v3.0.0" - it was more concise, but I doesn't support pluginRepositories
     # There is no setting how to call resulting profile (it is always "github"), but there is a setting to activate it (active_profiles)
     - name: Setup Maven settings.xml
       uses: whelk-io/maven-settings-xml-action@v22
@@ -71,7 +65,7 @@ runs:
             },
             {
               "id": "agilecustoms-maven",
-              "url": "${{ steps.codeartifact.outputs.URL }}/maven/maven/"
+              "url": "https://${{ steps.codeartifact.outputs.HOST }}/maven/maven/"
             }
           ]
         plugin_repositories: >
@@ -86,7 +80,7 @@ runs:
             },
             {
               "id": "agilecustoms-maven",
-              "url": "${{ steps.codeartifact.outputs.URL }}/maven/maven/"
+              "url": "https://${{ steps.codeartifact.outputs.HOST }}/maven/maven/"
             }
           ]
         active_profiles: >
