@@ -36,7 +36,7 @@ runs:
         echo "TOKEN=$TOKEN" >> $GITHUB_OUTPUT
         HOST="$domain-${{ inputs.AWS_ACCOUNT }}.d.codeartifact.us-east-1.amazonaws.com"
         echo "HOST=$HOST" >> $GITHUB_OUTPUT
-#        echo "ARTIFACT_STORE_HOST=$HOST" >> $GITHUB_ENV
+        echo "ARTIFACT_STORE_HOST=$HOST" >> $GITHUB_ENV
       # TOKEN used only in settings.xml file, while HOST is used both in settings.xml AND parent pom.xml 'distributionManagement'
       #  so it is additionally put in env variable 'ARTIFACT_STORE_URL', see pom.xml files in 'java-parent' repos
 
