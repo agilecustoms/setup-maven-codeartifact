@@ -4,6 +4,10 @@ inputs:
   AWS_ACCOUNT:
     description: 'AWS account number where the CodeArtifact domain is located'
     required: true
+  role-name:
+    description: 'IAM role to assume'
+    required: false
+    default: 'reader'
 runs:
   using: "composite"
   steps:
@@ -24,7 +28,7 @@ runs:
       uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-region: us-east-1
-        role-to-assume: arn:aws:iam::${{ inputs.AWS_ACCOUNT }}:role/ci/builder
+        role-to-assume: arn:aws:iam::${{ inputs.AWS_ACCOUNT }}:role/ci/${{ inputs.role-name }}
 
     - name: Generate CodeArtifact token and url
       id: codeartifact
