@@ -18,4 +18,4 @@ jobs:
       - name: Prepare Java
         uses: agilecustoms/gha-prepare-java@feature
         with:
-          AWS_ACCOUNT: ${{ vars.AWS_ACCOUNT_SHARED }}
+          AWS_ACCOUNT: ${{ vars.AWS_ACCOUNT_DIST }}
