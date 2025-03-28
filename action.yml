@@ -8,14 +8,22 @@ inputs:
     description: 'IAM role to assume'
     required: false
     default: 'reader'
+  java-version:
+    description: 'Java version to use'
+    required: false
+    default: '21' # latest LTS supported by AWS Lambda (our main runtime) as of Mar 2025
+  distribution:
+    description: 'Java distribution'
+    required: false
+    default: 'temurin' # default (pre-cached) in ubuntu-latest
 runs:
   using: "composite"
   steps:
     - name: Setup Java
       uses: actions/setup-java@v4
       with:
-        java-version: '21'
-        distribution: 'temurin' # not default, but pre-cached in ubuntu-latest (24)
+        java-version: ${{ inputs.java-version }}
+        distribution: ${{ inputs.distribution }}
         cache: maven # this will give cache inheritance and such cache hit and quick builds on feature branches/PRs
 
     - name: Info
