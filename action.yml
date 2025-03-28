@@ -15,7 +15,7 @@ runs:
       uses: actions/setup-java@v4
       with:
         java-version: '21'
-        distribution: 'corretto'
+        distribution: 'temurin' # not default, but pre-cached in ubuntu-latest (24)
         cache: maven # this will give cache inheritance and such cache hit and quick builds on feature branches/PRs
 
     - name: Info
