@@ -4,15 +4,26 @@ inputs:
   aws-account:
     description: 'AWS account number where the CodeArtifact domain is located'
     required: true
-  role-name:
+  aws-region:
+    description: 'AWS region where the CodeArtifact domain is located'
+    required: false
+    default: 'us-east-1'
+  aws-role:
     description: 'IAM role to assume'
     required: false
-    default: 'reader'
+    default: 'ci/reader'
+  aws-codeartifact-domain:
+    description: 'CodeArtifact domain name'
+    required: true
+  aws-codeartifact-repository:
+    description: 'CodeArtifact repository name'
+    required: false
+    default: 'maven' # default repository name
   java-version:
     description: 'Java version to use'
     required: false
     default: '21' # latest LTS supported by AWS Lambda (our main runtime) as of Mar 2025
-  distribution:
+  java-distribution:
     description: 'Java distribution'
     required: false
     default: 'temurin' # default (pre-cached) in ubuntu-latest
@@ -23,7 +34,7 @@ runs:
       uses: actions/setup-java@v4
       with:
         java-version: ${{ inputs.java-version }}
-        distribution: ${{ inputs.distribution }}
+        distribution: ${{ inputs.java-distribution }}
         cache: maven # this will give cache inheritance and such cache hit and quick builds on feature branches/PRs
 
     - name: Info
@@ -35,8 +46,8 @@ runs:
     - name: Login AWS
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        aws-region: us-east-1
-        role-to-assume: arn:aws:iam::${{ inputs.aws-account }}:role/ci/${{ inputs.role-name }}
+        aws-region: ${{ inputs.aws-region }}
+        role-to-assume: arn:aws:iam::${{ inputs.aws-account }}:role/${{ inputs.aws-role }}
 
     - name: Generate CodeArtifact token and url
       id: codeartifact
@@ -46,15 +57,15 @@ runs:
         TOKEN=`aws codeartifact get-authorization-token --domain $domain --query authorizationToken --output text`
         echo "::add-mask::$TOKEN"
         echo "TOKEN=$TOKEN" >> $GITHUB_OUTPUT
-        HOST="$domain-${{ inputs.aws-account }}.d.codeartifact.us-east-1.amazonaws.com"
+        HOST="$domain-${{ inputs.aws-account }}.d.codeartifact.${{ inputs.aws-region }}.amazonaws.com"
         echo "HOST=$HOST" >> $GITHUB_OUTPUT
         echo "ARTIFACT_STORE_HOST=$HOST" >> $GITHUB_ENV
       # TOKEN used only in settings.xml file, while HOST is used both in settings.xml AND parent pom.xml 'distributionManagement'
       #  so it is additionally put in env variable 'ARTIFACT_STORE_URL', see pom.xml files in 'java-parent' repos
       # Dec-31,2024 I triple checked: such env variable is JOB-scoped, so it indeed become available in job that calls this action
 
-    # First I tried "s4u/maven-settings-action@v3.0.0" - it was more concise, but I doesn't support pluginRepositories
-    # There is no setting how to call resulting profile (it is always "github"), but there is a setting to activate it (active_profiles)
+    # First I tried "s4u/maven-settings-action@v3.0.0" - it was more concise, but it doesn't support pluginRepositories
+    # There is no setting how to call the resulting profile (it is always "github"), but there is a setting to activate it (active_profiles)
     - name: Setup Maven settings.xml
       uses: whelk-io/maven-settings-xml-action@v22
       with:
