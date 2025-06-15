@@ -59,11 +59,10 @@ runs:
       id: codeartifact
       shell: bash
       run: |
-        domain=agilecustoms
-        TOKEN=`aws codeartifact get-authorization-token --domain $domain --query authorizationToken --output text`
+        TOKEN=`aws codeartifact get-authorization-token --domain ${{ inputs.aws-codeartifact-domain }} --query authorizationToken --output text`
         echo "::add-mask::$TOKEN"
         echo "TOKEN=$TOKEN" >> $GITHUB_OUTPUT
-        HOST="$domain-${{ inputs.aws-account }}.d.codeartifact.${{ inputs.aws-region }}.amazonaws.com"
+        HOST="${{ inputs.aws-codeartifact-domain }}-${{ inputs.aws-account }}.d.codeartifact.${{ inputs.aws-region }}.amazonaws.com"
         echo "HOST=$HOST" >> $GITHUB_OUTPUT
         echo "ARTIFACT_STORE_HOST=$HOST" >> $GITHUB_ENV
       # TOKEN used only in settings.xml file, while HOST is used both in settings.xml AND parent pom.xml 'distributionManagement'
@@ -78,7 +77,7 @@ runs:
         servers: >
           [
             {
-              "id": "agilecustoms-maven",
+              "id": "${{ inputs.aws-codeartifact-domain }}-${{ inputs.aws-codeartifact-repository }}",
               "username": "aws",
               "password": "${{ steps.codeartifact.outputs.TOKEN }}"
             }
@@ -94,7 +93,7 @@ runs:
               "url": "https://repo1.maven.org/maven2/"
             },
             {
-              "id": "agilecustoms-maven",
+              "id": "${{ inputs.aws-codeartifact-domain }}-${{ inputs.aws-codeartifact-repository }}",
               "url": "https://${{ steps.codeartifact.outputs.HOST }}/maven/maven/"
             }
           ]
@@ -109,7 +108,7 @@ runs:
               "url": "https://repo1.maven.org/maven2/"
             },
             {
-              "id": "agilecustoms-maven",
+              "id": "${{ inputs.aws-codeartifact-domain }}-${{ inputs.aws-codeartifact-repository }}",
               "url": "https://${{ steps.codeartifact.outputs.HOST }}/maven/maven/"
             }
           ]
