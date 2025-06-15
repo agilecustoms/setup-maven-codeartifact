@@ -1,4 +1,4 @@
-name: 'Prepare Java'
+name: 'Setup Java w/ CodeArtifact'
 description: 'Setup java + maven, login to AWS and generate CodeArtifact token'
 inputs:
   aws-account:
@@ -6,27 +6,32 @@ inputs:
     required: true
   aws-region:
     description: 'AWS region where the CodeArtifact domain is located'
-    required: false
-    default: 'us-east-1'
+    required: true
   aws-role:
     description: 'IAM role to assume'
-    required: false
-    default: 'ci/reader'
+    required: true
   aws-codeartifact-domain:
     description: 'CodeArtifact domain name'
     required: true
   aws-codeartifact-repository:
     description: 'CodeArtifact repository name'
+    required: true
+  aws-login:
+    description: 'Login to AWS. Default is true. Could be false if you login in AWS outside of this action'
     required: false
-    default: 'maven' # default repository name
+    default: 'true' # true by default, but can be set to false if you want to use this action only for setup-java
+  cache:
+    description: 'Cache type to use for setup-java action'
+    required: false
+    default: ''
   java-version:
     description: 'Java version to use'
     required: false
-    default: '21' # latest LTS supported by AWS Lambda (our main runtime) as of Mar 2025
+    default: '21' # latest LTS as of June 2025
   java-distribution:
     description: 'Java distribution'
     required: false
-    default: 'temurin' # default (pre-cached) in ubuntu-latest
+    default: ''
 runs:
   using: "composite"
   steps:
@@ -44,6 +49,7 @@ runs:
     # receives a JWT from the GitHub OIDC provider, and then requests an access token from AWS
     # as result we got env vars: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_SESSION_TOKEN
     - name: Login AWS
+      if: ${{ inputs.aws-login == 'true' }}
       uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-region: ${{ inputs.aws-region }}
