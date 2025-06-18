@@ -11,6 +11,9 @@ It is recommended to use different IAM roles: `/ci/builder` and `/ci/publisher` 
 For release workflow you likely want to update version in `pom.xml` file and add some git tags,
 so please check the `agilecustoms/release` action - it represents a holistic release action (uses `setup-java-codeartifact` under the hood). 
 
+This action is a combination of few other actions mainly `actions/setup-java` and `aws-actions/configure-aws-credentials`,
+hence all parameters have prefix either `aws-` for authorization in aws or `java-` for java-specific settings
+
 ## Usage in build workflow
 ```yaml
 jobs:

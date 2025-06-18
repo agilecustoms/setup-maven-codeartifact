@@ -31,9 +31,9 @@ inputs:
     required: false
     default: '21' # latest LTS as of June 2025
   java-distribution:
-    description: 'Java distribution'
+    description: 'Java distribution, use Temurin as it is pre-cached in ubuntu-latest'
     required: false
-    default: ''
+    default: 'temurin'
 runs:
   using: "composite"
   steps:
