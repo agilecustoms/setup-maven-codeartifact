@@ -29,11 +29,11 @@ jobs:
       - name: Setup Java
         uses: agilecustoms/setup-java-codeartifact@1.0.0
         with:
-          aws-account: 123456789012 # or use ${{ vars.AWS_ACCOUNT_DIST }}
+          aws-account: ${{ vars.AWS_ACCOUNT_DIST }}
           aws-region: us-east-1
-          aws-role: ci/builder
+          aws-role: ci/builder # default 
           aws-codeartifact-domain: your-company-name
-          java-version: 21
+          java-version: 21 # default
 
       - name: Maven build
         run: mvn verify --no-transfer-progress
