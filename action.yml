@@ -8,22 +8,24 @@ inputs:
     description: 'AWS region where the CodeArtifact domain is located'
     required: true
   aws-role:
-    description: 'IAM role to assume'
+    description: 'IAM role to assume, good option is /ci/builder'
+    default: 'ci/builder' # this role should have permissions to access CodeArtifact
     required: true
   aws-codeartifact-domain:
     description: 'CodeArtifact domain name'
     required: true
   aws-codeartifact-repository:
     description: 'CodeArtifact repository name'
+    default: 'maven' # default repository name
     required: true
   aws-login:
-    description: 'Login to AWS. Default is true. Could be false if you login in AWS outside of this action'
+    description: 'Login to AWS. Could be false if you login in AWS outside of this action'
     required: false
-    default: 'true' # true by default, but can be set to false if you want to use this action only for setup-java
-  cache:
-    description: 'Cache type to use for setup-java action'
+    default: 'true'
+  java-cache:
+    description: 'Enabled by default, specify empty string to disable caching'
     required: false
-    default: ''
+    default: 'maven'
   java-version:
     description: 'Java version to use'
     required: false
@@ -40,7 +42,7 @@ runs:
       with:
         java-version: ${{ inputs.java-version }}
         distribution: ${{ inputs.java-distribution }}
-        cache: maven # this will give cache inheritance and such cache hit and quick builds on feature branches/PRs
+        cache: ${{ inputs.java-cache }} # this will give cache inheritance and such cache hit and quick builds on feature branches/PRs
 
     - name: Info
       shell: bash
