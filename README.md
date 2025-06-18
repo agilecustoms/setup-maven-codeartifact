@@ -9,10 +9,10 @@ Designed to be used in your build workflow (when you need to access packages fro
 and also it a release workflow (when you publish packages in CodeArtifact).
 It is recommended to use different IAM roles: `/ci/builder` and `/ci/publisher` respectfully.
 For release workflow you likely want to update version in `pom.xml` file and add some git tags,
-so please check the `agilecustoms/release` action - it represents a holistic release action (uses `setup-java-codeartifact` under the hood). 
+so please check the `agilecustoms/release` action - it represents a holistic release action (uses `setup-maven-codeartifact` under the hood). 
 
 This action is a combination of few other actions mainly `actions/setup-java` and `aws-actions/configure-aws-credentials`,
-hence all parameters have prefix either `aws-` for authorization in aws or `java-` for java-specific settings
+hence all parameters have prefix either `aws-` (for authorization in aws) or `java-` (for java-specific settings)
 
 ## Usage in build workflow
 ```yaml
@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Java
-        uses: agilecustoms/setup-java-codeartifact@1.0.0
+        uses: agilecustoms/setup-maven-codeartifact@1.0.0
         with:
           aws-account: ${{ vars.AWS_ACCOUNT_DIST }}
           aws-region: us-east-1
