@@ -32,16 +32,28 @@ jobs:
           aws-account: ${{ vars.AWS_ACCOUNT_DIST }}
           aws-region: us-east-1
           aws-role: ci/builder # default 
-          aws-codeartifact-domain: your-company-name
+          aws-codeartifact-domain: mycompany
           java-version: 21 # default
 
       - name: Maven build
         run: mvn verify --no-transfer-progress
 ```
 
-## settings.xml
+## settings.xml for local development
+Under the hood this action generates [settings.xml](./ci.settings.xml) file with CodeArtifact repository and credentials. Note:
+- maven central and its mirror are used as primary repositories for dependencies and plugins, your company CodeArtifact is on 3rd place
+- your company repository id has format `{aws-codeartifact-domain}-maven`
 
-
-## using in local computer
-(If I ever do `setup-node|python-codeartifact` action, it should be similar to this)
-
+With this knowledge, you can place local version of [settings.xml](./local.settings.xml) on developers machines
+to give them read-only access to maven packages in corporate CodeArtifact.
+As you can see this `settings.xml` file has two env variables: `ARTIFACT_STORE_HOST` and `ARTIFACT_STORE_TOKEN`.
+Host is fixed (after you create CodeArtifact domain), you can place these two lines in your shell configuration (.zshrc, .bashrc):
+```shell
+export AWS_ACCOUNT_DIST=123456789012
+export ARTIFACT_STORE_HOST="mycompany-$AWS_ACCOUNT_DIST.d.codeartifact.us-east-1.amazonaws.com"
+```
+For `ARTIFACT_STORE_TOKEN` you'd need to generate it once a day with command like this:
+```shell
+TOKEN=$(aws codeartifact get-authorization-token --domain mycompany --query authorizationToken --output text)
+export ARTIFACT_STORE_TOKEN=$TOKEN
+```
