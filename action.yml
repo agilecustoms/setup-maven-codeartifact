@@ -37,6 +37,14 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Validate
+      shell: bash
+      run: |
+        if [[ "${{ inputs.java-cache }}" != "maven" && "${{ inputs.java-cache }}" != "" ]]; then
+          echo "Error: input 'java-cache' must be either 'maven' or an empty string." >&2
+          exit 1
+        fi
+
     - name: Setup Java
       uses: actions/setup-java@v4
       with:
