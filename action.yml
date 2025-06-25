@@ -159,6 +159,6 @@ runs:
         </settings>
         EOF
 
-    - name: Debug
-      shell: bash
-      run: cat $HOME/.m2/settings.xml # see ci.settings.xml
+#    - name: Debug
+#      shell: bash
+#      run: cat $HOME/.m2/settings.xml # see ci.settings.xml
