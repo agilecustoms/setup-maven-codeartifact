@@ -77,58 +77,46 @@ runs:
         echo "ARTIFACT_STORE_HOST=$HOST" >> $GITHUB_ENV
         REPO_ID="${{ inputs.aws-codeartifact-domain }}-${{ inputs.aws-codeartifact-repository }}"
         echo "REPO_ID=$REPO_ID" >> $GITHUB_OUTPUT
-      # TOKEN used only in settings.xml file, while HOST is used both in settings.xml AND parent pom.xml 'distributionManagement'
-      #  so it is additionally put in env variable 'ARTIFACT_STORE_URL', see pom.xml files in 'java-parent' repos
-      # Dec-31,2024 I triple checked: such env variable is JOB-scoped, so it indeed become available in job that calls this action
 
-    # First I tried "s4u/maven-settings-action@v3.0.0" - it was more concise, but it doesn't support pluginRepositories
-    # There is no setting how to call the resulting profile (it is always "github"), but there is a setting to activate it (active_profiles)
-    - name: Setup Maven settings.xml
-      uses: whelk-io/maven-settings-xml-action@v22
-      with:
-        servers: >
-          [
-            {
-              "id": "${{ steps.codeartifact.outputs.REPO_ID }}",
-              "username": "aws",
-              "password": "${{ steps.codeartifact.outputs.TOKEN }}"
-            }
-          ]
-        repositories: >
-          [
-            {
-              "id": "central",
-              "url": "https://central.maven.org/maven2/"
-            },
-            {
-              "id": "mirror",
-              "url": "https://repo1.maven.org/maven2/"
-            },
-            {
-              "id": "${{ steps.codeartifact.outputs.REPO_ID }}",
-              "url": "https://${{ steps.codeartifact.outputs.HOST }}/${{ inputs.aws-codeartifact-repository }}/maven/"
-            }
-          ]
-        plugin_repositories: >
-          [
-            {
-              "id": "central",
-              "url": "https://central.maven.org/maven2/"
-            },
-            {
-              "id": "mirror",
-              "url": "https://repo1.maven.org/maven2/"
-            },
-            {
-              "id": "${{ steps.codeartifact.outputs.REPO_ID }}",
-              "url": "https://${{ steps.codeartifact.outputs.HOST }}/${{ inputs.aws-codeartifact-repository }}/maven/"
-            }
-          ]
-        active_profiles: >
-          [
-            "github"
-          ]
+    - name: Generate Maven settings.xml
+      shell: bash
+      run: |
+        mkdir -p $HOME/.m2
+        cat <<EOF > $HOME/.m2/settings.xml
+        <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+          <activeProfiles>
+            <activeProfile>github</activeProfile>
+          </activeProfiles>
+          <profiles>
+            <profile>
+              <id>github</id>
+              <repositories>
+                <repository>
+                <id>${{ steps.codeartifact.outputs.REPO_ID }}</id>
+                <url>https://${{ steps.codeartifact.outputs.HOST }}/${{ inputs.aws-codeartifact-repository }}/maven/</url>
+                </repository>
+              </repositories>
+              <pluginRepositories>
+              <pluginRepository>
+                <id>${{ steps.codeartifact.outputs.REPO_ID }}</id>
+                <url>https://${{ steps.codeartifact.outputs.HOST }}/${{ inputs.aws-codeartifact-repository }}/maven/</url>
+              </pluginRepository>
+              </pluginRepositories>
+            </profile>
+          </profiles>
+          <servers>
+            <server>
+              <id>${{ steps.codeartifact.outputs.REPO_ID }}</id>
+              <username>aws</username>
+              <password>${{ steps.codeartifact.outputs.TOKEN }}</password>
+            </server>
+          </servers>
+          <mirrors/>
+          <pluginGroups/>
+          <proxies/>
+        </settings>
+        EOF
 
-#    - name: Debug
-#      shell: bash
-#      run: cat /home/runner/.m2/settings.xml # see sample.settings.xml
+    - name: Debug
+      shell: bash
+      run: cat $HOME/.m2/settings.xml # see ci.settings.xml
