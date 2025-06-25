@@ -34,6 +34,43 @@ inputs:
     description: 'Java distribution, use Temurin as it is pre-cached in ubuntu-latest'
     required: false
     default: 'temurin'
+  settings-mirrors:
+    description: 'settings.xml mirrors section (optional)'
+    required: false
+  settings-pluginGroups:
+    description: 'settings.xml pluginGroups section (optional)'
+    required: false
+  settings-pluginRepositories:
+    description: 'Additional plugin repositories (besides CodeArtifact one)'
+    required: false
+    default: |
+      <pluginRepository>
+        <id>central</id>
+        <url>https://central.maven.org/maven2/</url>
+      </pluginRepository>
+      <pluginRepository>
+        <id>repo1</id>
+        <url>https://repo1.maven.org/maven2/</url>
+      </pluginRepository>
+  settings-profile-properties:
+    description: 'settings.xml profile properties (optional)'
+    required: false
+  settings-proxies:
+    description: 'settings.xml proxies section (optional)'
+    required: false
+  settings-repositories:
+    description: 'Additional repositories (besides CodeArtifact one)'
+    required: false
+    default: |
+      <repository>
+        <id>central</id>
+        <url>https://central.maven.org/maven2/</url>
+      </repository>
+      <repository>
+        <id>repo1</id>
+        <url>https://repo1.maven.org/maven2/</url>
+      </repository>
+
 runs:
   using: "composite"
   steps:
@@ -83,24 +120,29 @@ runs:
       run: |
         mkdir -p $HOME/.m2
         cat <<EOF > $HOME/.m2/settings.xml
-        <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+        <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
           <activeProfiles>
             <activeProfile>github</activeProfile>
           </activeProfiles>
           <profiles>
             <profile>
               <id>github</id>
+              <properties>${{ inputs.settings-profile-properties }}</properties>
               <repositories>
+                ${{ inputs.settings-repositories }}
                 <repository>
-                <id>${{ steps.codeartifact.outputs.REPO_ID }}</id>
-                <url>https://${{ steps.codeartifact.outputs.HOST }}/${{ inputs.aws-codeartifact-repository }}/maven/</url>
+                  <id>${{ steps.codeartifact.outputs.REPO_ID }}</id>
+                  <url>https://${{ steps.codeartifact.outputs.HOST }}/${{ inputs.aws-codeartifact-repository }}/maven/</url>
                 </repository>
               </repositories>
               <pluginRepositories>
-              <pluginRepository>
-                <id>${{ steps.codeartifact.outputs.REPO_ID }}</id>
-                <url>https://${{ steps.codeartifact.outputs.HOST }}/${{ inputs.aws-codeartifact-repository }}/maven/</url>
-              </pluginRepository>
+                ${{ inputs.settings-pluginRepositories }}
+                <pluginRepository>
+                  <id>${{ steps.codeartifact.outputs.REPO_ID }}</id>
+                  <url>https://${{ steps.codeartifact.outputs.HOST }}/${{ inputs.aws-codeartifact-repository }}/maven/</url>
+                </pluginRepository>
               </pluginRepositories>
             </profile>
           </profiles>
@@ -111,9 +153,9 @@ runs:
               <password>${{ steps.codeartifact.outputs.TOKEN }}</password>
             </server>
           </servers>
-          <mirrors/>
-          <pluginGroups/>
-          <proxies/>
+          <mirrors>${{ inputs.settings-mirrors }}</mirrors>
+          <pluginGroups>${{ inputs.settings-pluginGroups }}</pluginGroups>
+          <proxies>${{ inputs.settings-proxies }}</proxies>
         </settings>
         EOF
 
