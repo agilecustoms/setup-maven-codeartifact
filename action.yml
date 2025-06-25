@@ -106,7 +106,7 @@ runs:
             },
             {
               "id": "${{ steps.codeartifact.outputs.REPO_ID }}",
-              "url": "https://${{ steps.codeartifact.outputs.HOST }}/maven/maven/"
+              "url": "https://${{ steps.codeartifact.outputs.HOST }}/${{ inputs.aws-codeartifact-repository }}/maven/"
             }
           ]
         plugin_repositories: >
@@ -121,7 +121,7 @@ runs:
             },
             {
               "id": "${{ steps.codeartifact.outputs.REPO_ID }}",
-              "url": "https://${{ steps.codeartifact.outputs.HOST }}/maven/maven/"
+              "url": "https://${{ steps.codeartifact.outputs.HOST }}/${{ inputs.aws-codeartifact-repository }}/maven/"
             }
           ]
         active_profiles: >
