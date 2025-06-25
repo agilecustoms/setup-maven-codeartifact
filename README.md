@@ -3,7 +3,7 @@ Allows to use Maven backed by AWS CodeArtifact repository in GitHub Actions:
 1. Setup Java + Maven
 2. Authorize in AWS Account with a provided role
 3. Generate CodeArtifact token and URL and put in env variables
-4. Forge `settings.xml` and put in a place where Maven can find it
+4. Compose `settings.xml` and put in a place where Maven can find it
 
 Designed to be used in your build workflow (when you need to access packages from CodeArtifact)
 and also it a release workflow (when you publish packages in CodeArtifact).

@@ -75,6 +75,8 @@ runs:
         HOST="${{ inputs.aws-codeartifact-domain }}-${{ inputs.aws-account }}.d.codeartifact.${{ inputs.aws-region }}.amazonaws.com"
         echo "HOST=$HOST" >> $GITHUB_OUTPUT
         echo "ARTIFACT_STORE_HOST=$HOST" >> $GITHUB_ENV
+        REPO_ID="${{ inputs.aws-codeartifact-domain }}-${{ inputs.aws-codeartifact-repository }}"
+        echo "REPO_ID=$REPO_ID" >> $GITHUB_OUTPUT
       # TOKEN used only in settings.xml file, while HOST is used both in settings.xml AND parent pom.xml 'distributionManagement'
       #  so it is additionally put in env variable 'ARTIFACT_STORE_URL', see pom.xml files in 'java-parent' repos
       # Dec-31,2024 I triple checked: such env variable is JOB-scoped, so it indeed become available in job that calls this action
@@ -87,7 +89,7 @@ runs:
         servers: >
           [
             {
-              "id": "${{ inputs.aws-codeartifact-domain }}-${{ inputs.aws-codeartifact-repository }}",
+              "id": "${{ steps.codeartifact.outputs.REPO_ID }}",
               "username": "aws",
               "password": "${{ steps.codeartifact.outputs.TOKEN }}"
             }
@@ -103,7 +105,7 @@ runs:
               "url": "https://repo1.maven.org/maven2/"
             },
             {
-              "id": "${{ inputs.aws-codeartifact-domain }}-${{ inputs.aws-codeartifact-repository }}",
+              "id": "${{ steps.codeartifact.outputs.REPO_ID }}",
               "url": "https://${{ steps.codeartifact.outputs.HOST }}/maven/maven/"
             }
           ]
@@ -118,7 +120,7 @@ runs:
               "url": "https://repo1.maven.org/maven2/"
             },
             {
-              "id": "${{ inputs.aws-codeartifact-domain }}-${{ inputs.aws-codeartifact-repository }}",
+              "id": "${{ steps.codeartifact.outputs.REPO_ID }}",
               "url": "https://${{ steps.codeartifact.outputs.HOST }}/maven/maven/"
             }
           ]
