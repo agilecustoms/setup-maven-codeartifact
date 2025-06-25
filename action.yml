@@ -114,6 +114,9 @@ runs:
         echo "ARTIFACT_STORE_HOST=$HOST" >> $GITHUB_ENV
         REPO_ID="${{ inputs.aws-codeartifact-domain }}-${{ inputs.aws-codeartifact-repository }}"
         echo "REPO_ID=$REPO_ID" >> $GITHUB_OUTPUT
+      # REPO_ID, TOKEN and HOST are used in settings.xml file (which used both in build and release jobs, just different IAM roles)
+      # HOST is also used in parent pom.xml 'distributionManagement', so it is additionally put in env variable 'ARTIFACT_STORE_URL'.
+      # Env variables are JOB-scoped, so it gets available in next step when you call 'mvn deploy'
 
     - name: Generate Maven settings.xml
       shell: bash

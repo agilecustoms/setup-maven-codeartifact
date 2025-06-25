@@ -8,11 +8,11 @@ Allows to use Maven backed by AWS CodeArtifact repository in GitHub Actions:
 Designed to be used in your build workflow (when you need to access packages from CodeArtifact)
 and also it a release workflow (when you publish packages in CodeArtifact).
 It is recommended to use different IAM roles: `/ci/builder` and `/ci/publisher` respectfully.
-For release workflow you likely want to update a version in `pom.xml` file and add some git tags,
+For release workflow you likely want to bump a version in `pom.xml` file and add some git tags,
 so please check the `agilecustoms/release` action - it represents a holistic release action (uses `setup-maven-codeartifact` under the hood). 
 
 This action is a combination of few other actions mainly `actions/setup-java` and `aws-actions/configure-aws-credentials`,
-hence all parameters have prefix either `aws-` (for authorization in aws) or `java-` (for java-specific settings)
+hence all parameters have prefix either `java-` (for java-specific settings) or `aws-` (for authorization in aws)
 
 ## Usage in build workflow
 ```yaml
@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Java
-        uses: agilecustoms/setup-maven-codeartifact@1.0.0
+        uses: agilecustoms/setup-maven-codeartifact@v1
         with:
           aws-account: ${{ vars.AWS_ACCOUNT_DIST }}
           aws-region: us-east-1
@@ -42,7 +42,7 @@ jobs:
 ## settings.xml for local development
 Under the hood, this action generates [settings.xml](./ci.settings.xml) file with CodeArtifact repository and credentials. Note:
 - maven central and its mirror are used as primary repositories for dependencies and plugins, your company CodeArtifact is in 3rd place
-- your company repository id has format `{aws-codeartifact-domain}-maven`
+- your company repository id has format `{aws-codeartifact-domain}-{aws-codeartifact-repository}`
 
 With this knowledge, you can place a local version of [settings.xml](./local.settings.xml) on developers' machines
 to give them read-only access to maven packages in corporate CodeArtifact.
