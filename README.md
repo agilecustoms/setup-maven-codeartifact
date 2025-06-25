@@ -57,3 +57,4 @@ For `ARTIFACT_STORE_TOKEN` you'd need to generate it once a day with command lik
 TOKEN=$(aws codeartifact get-authorization-token --domain mycompany --query authorizationToken --output text)
 export ARTIFACT_STORE_TOKEN=$TOKEN
 ```
+
