@@ -8,9 +8,17 @@ Allows to use Maven backed by AWS CodeArtifact repository in GitHub Actions:
 
 Designed to be used in your build workflow when you need to access packages from CodeArtifact.
 It is also used in publish workflow to upload packages in CodeArtifact.
-It is recommended to use different IAM roles: `/ci/builder` and `/ci/publisher` respectfully.
 For release workflow you likely want to bump a version in `pom.xml` file and add some git tags,
-so please check the `agilecustoms/release` action - it represents a holistic release action (uses `setup-maven-codeartifact` under the hood). 
+so please check the [agilecustoms/publish](https://github.com/agilecustoms/publish) action —
+it represents a holistic release action (uses `setup-maven-codeartifact` under the hood).
+
+For build and publish workflows it is recommended to use different IAM roles: `/ci/builder` and `/ci/publisher`.
+Below there are two terraform modules that have all necessary permissions to work with CodeArtifact:
+- [ci-builder](https://github.com/agilecustoms/terraform-aws-ci-builder)
+- [ci-publisher](https://github.com/agilecustoms/terraform-aws-ci-publisher)
+
+And this is [example](https://github.com/agilecustoms/terraform-aws-ci-publisher?tab=readme-ov-file#how-to-create-a-role-with-this-policy)
+how to create AWS IAM role based of these policies with password-less trust policy
 
 This action is a combination of few other actions mainly `actions/setup-java` and `aws-actions/configure-aws-credentials`,
 hence all parameters have prefix either `java-` (for java-specific settings) or `aws-` (for authorization in aws)
