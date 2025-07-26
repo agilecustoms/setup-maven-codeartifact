@@ -86,12 +86,13 @@ that take 95% of dependencies from Maven Central and left 5% from corporate Code
 Come companies opt in to store all dependencies in CodeArtifact with Maven Central as an _upstream_.
 In this configuration you would want to set `settings-pluginRepositories` and `settings-repositories` to empty string `""`
 
-## settings.xml for local development
+## Local development
 
 Under the hood, this action generates a [settings.xml](./ci.settings.xml) file with CodeArtifact repository and credentials.
 Note:
-- maven central and its mirror are used as primary and secondary repositories for dependencies and plugins, your company CodeArtifact is in 3rd place
-- your company repository id has format `{aws-codeartifact-domain}-{aws-codeartifact-repository}`
+- maven central and its mirror are used as primary and secondary repositories for dependencies and plugins, your company CodeArtifact is in 3rd place.
+If you use CodeArtifact upstream feature, feel free to remove maven central and its mirror from `repositories` and `pluginRepositories` sections
+- your company repository id has format `{aws-codeartifact-domain}-{aws-codeartifact-repository}` like `mycompany-maven`
 
 With this knowledge, you can place a local version of [settings.xml](./local.settings.xml) on developers' machines
 to give them read-only access to maven packages in corporate CodeArtifact.
@@ -101,7 +102,9 @@ Host is fixed (after you create CodeArtifact domain), you can place these two li
 export AWS_ACCOUNT_DIST=123456789012
 export ARTIFACT_STORE_HOST="mycompany-$AWS_ACCOUNT_DIST.d.codeartifact.us-east-1.amazonaws.com"
 ```
-For `ARTIFACT_STORE_TOKEN` you'd need to generate it (at most) once a day with command like this:
+CodeArtifact token is _NOT_ long living, max lifetime is 12 hours.
+So if you need to resolve new maven dependencies on local dev machine,
+you'd need to regenerate `ARTIFACT_STORE_TOKEN` (at most once a day) with command like this:
 ```shell
 TOKEN=$(aws codeartifact get-authorization-token --domain mycompany --query authorizationToken --output text)
 export ARTIFACT_STORE_TOKEN=$TOKEN
