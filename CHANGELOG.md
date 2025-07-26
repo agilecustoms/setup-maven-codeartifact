@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.3](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.5.2...v1.5.3) (2025-07-26)
+
+### Bug Fixes
+
+* add branding ([ac633e1](https://github.com/agilecustoms/setup-maven-codeartifact/commit/ac633e1ee8208b3b53797e888f27379e957d3a0e))
+
+
 ## [1.5.2](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.5.1...v1.5.2) (2025-07-26)
 
 ### Bug Fixes
