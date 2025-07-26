@@ -9,7 +9,7 @@ Allows to use Maven backed by AWS CodeArtifact repository in GitHub Actions:
 Designed to be used in your build workflow when you need to access packages from CodeArtifact.
 It is also used in publish workflow to upload packages in CodeArtifact.
 For release workflow you likely want to bump a version in `pom.xml` file and add some git tags,
-so please check the [agilecustoms/publish](https://github.com/agilecustoms/publish) action —
+so please check the [agilecustoms/release](https://github.com/agilecustoms/release) action —
 it represents a holistic release action (uses `setup-maven-codeartifact` under the hood).
 
 For build and publish workflows it is recommended to use different IAM roles: `/ci/builder` and `/ci/publisher`.
