@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.2](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.5.1...v1.5.2) (2025-07-26)
+
+### Bug Fixes
+
+* improve local development docs ([867c258](https://github.com/agilecustoms/setup-maven-codeartifact/commit/867c25823092e6f121f18b35c70ae666677a3101))
+
+
 ## [1.5.1](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.5.0...v1.5.1) (2025-07-26)
 
 ### Bug Fixes
