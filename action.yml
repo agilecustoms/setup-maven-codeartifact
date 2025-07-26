@@ -4,13 +4,10 @@ inputs:
   aws-account:
     description: 'AWS account number where the CodeArtifact domain is located'
     required: true
-  aws-region:
-    description: 'AWS region where the CodeArtifact domain is located'
-    required: true
-  aws-role:
-    description: 'IAM role to assume, good option is /ci/builder'
-    default: 'ci/builder' # this role should have permissions to access CodeArtifact
-    required: true
+  aws-login:
+    description: 'Login to AWS. Could be false if you login in AWS outside of this action'
+    required: false
+    default: 'true'
   aws-codeartifact-domain:
     description: 'CodeArtifact domain name'
     required: true
@@ -18,22 +15,28 @@ inputs:
     description: 'CodeArtifact repository name'
     default: 'maven' # default repository name
     required: true
-  aws-login:
-    description: 'Login to AWS. Could be false if you login in AWS outside of this action'
+  aws-region:
+    description: 'AWS region where the CodeArtifact domain is located'
+    required: true
+  aws-role:
+    description: 'IAM role to assume, good option is /ci/builder'
+    default: 'ci/builder' # this role should have permissions to access CodeArtifact
     required: false
-    default: 'true'
   java-cache:
     description: 'Enabled by default, specify empty string to disable caching'
     required: false
     default: 'maven'
-  java-version:
-    description: 'Java version to use'
+  java-cache-dependency-path:
+    description: 'see https://github.com/actions/setup-java "cache-dependency-path"'
     required: false
-    default: '21' # latest LTS as of June 2025
   java-distribution:
     description: 'Java distribution, use Temurin as it is pre-cached in ubuntu-latest'
     required: false
     default: 'temurin'
+  java-version:
+    description: 'Java version to use'
+    required: false
+    default: '21' # latest LTS as of June 2025
   settings-mirrors:
     description: 'settings.xml mirrors section (optional)'
     required: false
@@ -87,7 +90,8 @@ runs:
       with:
         java-version: ${{ inputs.java-version }}
         distribution: ${{ inputs.java-distribution }}
-        cache: ${{ inputs.java-cache }} # this will give cache inheritance and such cache hit and quick builds on feature branches/PRs
+        cache: ${{ inputs.java-cache }}
+        cache-dependency-path: ${{ inputs.java-cache-dependency-path }}
 
     - name: Info
       shell: bash
