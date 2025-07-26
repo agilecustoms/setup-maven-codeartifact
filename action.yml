@@ -1,4 +1,4 @@
-name: 'Setup Java w/ CodeArtifact'
+name: 'Setup Maven with CodeArtifact'
 author: 'Alexey Chekulaev'
 description: 'Setup java + maven and login (generate token) to resolve maven dependencies from AWS CodeArtifact repository'
 branding:
