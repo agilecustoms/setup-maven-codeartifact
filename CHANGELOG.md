@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.5](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.5.4...v1.5.5) (2025-07-26)
+
+### Bug Fixes
+
+* minor doc update ([e8bf5c7](https://github.com/agilecustoms/setup-maven-codeartifact/commit/e8bf5c7b6af446b28dbd092c29227ff6bcb0a801))
+
+
 ## [1.5.4](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.5.3...v1.5.4) (2025-07-26)
 
 ### Bug Fixes
