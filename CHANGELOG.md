@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.5.0](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.4.5...v1.5.0) (2025-07-26)
+
+### Features
+
+* add java-cache-dependency-path ([fd75377](https://github.com/agilecustoms/setup-maven-codeartifact/commit/fd75377bed5df110e22e70a914042c70e2818fdd))
+
+
 ## [1.4.5](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.4.4...v1.4.5) (2025-07-26)
 
 ### Bug Fixes
