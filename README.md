@@ -139,6 +139,10 @@ jobs:
           settings-proxies: ${{ steps.proxy.outputs.CONFIG }}
 ```
 
+## Misc
+
+- [Troubleshooting](./docs/troubleshooting.md)
+
 ## License
 
 This project is released under the [MIT License](./LICENSE)
