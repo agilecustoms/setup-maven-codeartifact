@@ -46,8 +46,8 @@ it represents a holistic release action (uses `setup-maven-codeartifact` under t
 For build and release workflows it is recommended to use different IAM roles: `/ci/builder` and `/ci/publisher`.
 Builder has read-only access to CodeArtifact, while publisher has write access.
 Below there are two terraform modules that have all necessary permissions to work with CodeArtifact:
-- [ci-builder](https://github.com/agilecustoms/terraform-aws-ci-builder)
-- [ci-publisher](https://github.com/agilecustoms/terraform-aws-ci-publisher)
+- **ci-builder** - [github](https://github.com/agilecustoms/terraform-aws-ci-builder) - [terraform registry module](https://registry.terraform.io/modules/agilecustoms/ci-builder/aws/latest)
+- **ci-publisher** - [github](https://github.com/agilecustoms/terraform-aws-ci-publisher) - [terraform registry module](https://registry.terraform.io/modules/agilecustoms/ci-publisher/aws/latest)
 
 And this is [example](https://github.com/agilecustoms/terraform-aws-ci-publisher?tab=readme-ov-file#how-to-create-a-role-with-this-policy)
 how to create an AWS IAM role based on these policies with a password-less trust policy,
