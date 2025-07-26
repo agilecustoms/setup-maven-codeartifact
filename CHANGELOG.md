@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.4](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.5.3...v1.5.4) (2025-07-26)
+
+### Bug Fixes
+
+* change action name ([f90211c](https://github.com/agilecustoms/setup-maven-codeartifact/commit/f90211c49b9dfd43e950087b1fe65f1a7a676fe0))
+
+
 ## [1.5.3](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.5.2...v1.5.3) (2025-07-26)
 
 ### Bug Fixes
