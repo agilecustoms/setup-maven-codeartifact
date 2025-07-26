@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.4](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.4.3...v1.4.4) (2025-07-26)
+
+### Bug Fixes
+
+* rename agilecustoms/publish -> release ([b98354c](https://github.com/agilecustoms/setup-maven-codeartifact/commit/b98354c4d92db05fc2ad0d54d09c7795f4f7968d))
+
+
 ## [1.4.3](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.4.2...v1.4.3) (2025-07-25)
 
 ### Bug Fixes
