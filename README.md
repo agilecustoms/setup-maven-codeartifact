@@ -6,7 +6,7 @@ What it does:
 1. Setup Java + Maven
 2. Authorize in AWS Account with a provided role
 3. Generate CodeArtifact token and URL and put in env variables
-4. Compose `settings.xml` and put in a place where Maven can find it
+4. Compose `settings.xml` and put in `~/.m2`
 
 ## Usage
 
