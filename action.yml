@@ -1,5 +1,9 @@
 name: 'Setup Java w/ CodeArtifact'
-description: 'Setup java + maven, login to AWS and generate CodeArtifact token'
+author: 'Alexey Chekulaev'
+description: 'Setup java + maven and login (generate token) to resolve maven dependencies from AWS CodeArtifact repository'
+branding:
+  icon: package
+  color: green
 inputs:
   aws-account:
     description: 'AWS account number where the CodeArtifact domain is located'
