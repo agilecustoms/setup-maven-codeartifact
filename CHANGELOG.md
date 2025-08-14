@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.7](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.5.6...v1.5.7) (2025-08-14)
+
+### Miscellaneous
+
+* add custom .releaserc.json ([f28f730](https://github.com/agilecustoms/setup-maven-codeartifact/commit/f28f730a3e571229452f6a14e6b686e05641926e))
+
+
 ## [1.5.6](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.5.5...v1.5.6) (2025-07-26)
 
 ### Bug Fixes
