@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.8](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.5.7...v1.5.8) (2025-08-20)
+
+### Miscellaneous
+
+* use token from release env ([21bfb6d](https://github.com/agilecustoms/setup-maven-codeartifact/commit/21bfb6d058649bca1b0d0f3be079c0c13be128b0))
+
+
 ## [1.5.7](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.5.6...v1.5.7) (2025-08-14)
 
 ### Miscellaneous
