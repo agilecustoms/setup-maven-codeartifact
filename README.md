@@ -60,24 +60,24 @@ Read more about software distribution in AWS in my [LinkedIn article](https://ww
 This action is a combination of few other actions mainly `actions/setup-java` and `aws-actions/configure-aws-credentials`.
 All `java-*` inputs are pass through parameters to `actions/setup-java` action, so please refer to [setup-java documentation](https://github.com/actions/setup-java?tab=readme-ov-file#usage)
 
-| Name                          | Required | Default       | Description                                                                                             |
-|-------------------------------|----------|---------------|---------------------------------------------------------------------------------------------------------|
-| `aws-account`                 | **Yes**  |               | AWS account number where the CodeArtifact domain is located                                             |
-| `aws-login`                   | No       | `true`        | Whether to login to AWS. Set to `false` if you handle AWS login separately                              |
-| `aws-codeartifact-domain`     | **Yes**  |               | CodeArtifact domain name                                                                                |
-| `aws-codeartifact-repository` | **Yes**  | `maven`       | CodeArtifact repository name                                                                            |
-| `aws-region`                  | **Yes**  |               | AWS region where the CodeArtifact domain is located                                                     |
-| `aws-role`                    | No       | `ci/builder`  | IAM role to assume for CodeArtifact access                                                              |
-| `java-cache`                  | No       | `maven`       | Enable Maven dependency caching. Use empty string `""` to disable                                       |
-| `java-cache-dependency-path`  | No       | (see doc.)    | See description at [actions/setup-java](https://github.com/actions/setup-java?tab=readme-ov-file#usage) |
-| `java-distribution`           | No       | `temurin`     | Java distribution. Default is Temurin as it is pre-cached in ubuntu-latest                              |
-| `java-version`                | No       | `21`          | Java version to use. Default is latest LTS (21 as of June 2025)                                         |
-| `settings-mirrors`            | No       |               | Maven settings.xml mirrors section (XML format)                                                         |
-| `settings-pluginGroups`       | No       |               | Maven settings.xml pluginGroups section (XML format)                                                    |
-| `settings-pluginRepositories` | No       | Maven Central | Additional plugin repositories in XML format to be placed in front of CodeArtifact                      |
-| `settings-profile-properties` | No       |               | Maven settings.xml profile properties section (XML format)                                              |
-| `settings-proxies`            | No       |               | Maven settings.xml proxies section (XML format)                                                         |
-| `settings-repositories`       | No       | Maven Central | Additional Maven repositories in XML format to be placed before CodeArtifact                            |
+| Name                            | Default       | Description                                                                                             |
+|---------------------------------|---------------|---------------------------------------------------------------------------------------------------------|
+| **aws-account** (required)      |               | AWS account number where the CodeArtifact domain is located                                             |
+| aws-login                       | _true_        | Whether to login to AWS. Set to _false_ if you handle AWS login separately                              |
+| **aws-codeartifact-domain**     |               | CodeArtifact domain name                                                                                |
+| **aws-codeartifact-repository** | maven         | CodeArtifact repository name                                                                            |
+| **aws-region**                  |               | AWS region where the CodeArtifact domain is located                                                     |
+| aws-role                        | ci/builder    | IAM role to assume for CodeArtifact access                                                              |
+| java-cache                      | maven         | Enable Maven dependency caching. Use empty string `""` to disable                                       |
+| java-cachedependency-path`      | (see doc.)    | See description at [actions/setup-java](https://github.com/actions/setup-java?tab=readme-ov-file#usage) |
+| java-distribution               | temurin       | Java distribution. Default is Temurin as it is pre-cached in ubuntu-latest                              |
+| java-version                    | 21            | Java version to use. Default is latest LTS (21 as of June 2025)                                         |
+| settings-mirrors                |               | Maven settings.xml mirrors section (XML format)                                                         |
+| settings-pluginGroups           |               | Maven settings.xml pluginGroups section (XML format)                                                    |
+| settings-pluginRepositories     | Maven Central | Additional plugin repositories in XML format to be placed in front of CodeArtifact                      |
+| settings-profileproperties`     |               | Maven settings.xml profile properties section (XML format)                                              |
+| settings-proxies                |               | Maven settings.xml proxies section (XML format)                                                         |
+| settings-repositories           | Maven Central | Additional Maven repositories in XML format to be placed before CodeArtifact                            |
 
 Notes:
 1. for `aws-account` it is recommended to have a dedicated AWS account (not dev, not prod) to store artifacts (S3 binaries, CodeArtifact, Docker images)
