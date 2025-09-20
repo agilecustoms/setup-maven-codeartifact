@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.9](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.5.8...v1.5.9) (2025-09-20)
+
+### Miscellaneous
+
+* update actions/checkout to v5 ([d7267ac](https://github.com/agilecustoms/setup-maven-codeartifact/commit/d7267ac560b1e752fe643d6d4fe38a9c6e9ae731))
+
+
 ## [1.5.8](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.5.7...v1.5.8) (2025-08-20)
 
 ### Miscellaneous
