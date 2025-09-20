@@ -22,7 +22,7 @@ jobs:
       contents: read # required for actions/checkout
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Java
         uses: agilecustoms/setup-maven-codeartifact@v1
@@ -123,7 +123,7 @@ jobs:
       contents: read # required for actions/checkout
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Proxy with a secret
         id: proxy
