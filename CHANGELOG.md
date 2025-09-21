@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.5.9...v1.6.0) (2025-09-21)
+
+### Features
+
+* use new configure-aws-credentials@v5 ([1c1c333](https://github.com/agilecustoms/setup-maven-codeartifact/commit/1c1c333c373a4abacb3d3a4234bb3fef235e43cf))
+
+
 ## [1.5.9](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.5.8...v1.5.9) (2025-09-20)
 
 ### Miscellaneous
