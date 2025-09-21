@@ -134,7 +134,7 @@ jobs:
           echo "CONFIG=$PROXY_CONFIG" >> $GITHUB_OUTPUT
 
       - name: Setup Java
-        uses: agilecustoms/setup-maven-codeartifact@v1
+        uses: agilecustoms/setup-maven-codeartifact@v2
         with:
           aws-account: ${{ vars.AWS_ACCOUNT_DIST }}
           aws-region: us-east-1
