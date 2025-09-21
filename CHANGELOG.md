@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.6.0...v2.0.0) (2025-09-21)
+
+### ⚠ BREAKING CHANGES
+
+* use setup-java@v5 which uses Node24
+
+### Features
+
+* use setup-java@v5 which uses Node24 ([3238e14](https://github.com/agilecustoms/setup-maven-codeartifact/commit/3238e149afe8f4cea48bd474830f537720a9f393))
+
+
 ## [1.6.0](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.5.9...v1.6.0) (2025-09-21)
 
 ### Features
