@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.0.1...v2.0.2) (2025-11-04)
+
+### Documentation
+
+* update documentation with more examples ([70c770d](https://github.com/agilecustoms/setup-maven-codeartifact/commit/70c770d90a14d2e4c5529f35a6804753ab67b31c))
+
+
 ## [2.0.1](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.0.0...v2.0.1) (2025-11-04)
 
 ### Miscellaneous
