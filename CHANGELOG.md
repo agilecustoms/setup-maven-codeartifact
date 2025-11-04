@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.0.0...v2.0.1) (2025-11-04)
+
+### Miscellaneous
+
+* update dependency version ([d08f64a](https://github.com/agilecustoms/setup-maven-codeartifact/commit/d08f64abc68aff251ffbec4e171c151a5820b1de))
+
+
 ## [2.0.0](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v1.6.0...v2.0.0) (2025-09-21)
 
 ### ⚠ BREAKING CHANGES
