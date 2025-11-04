@@ -1,6 +1,8 @@
 # About
 
-A GitHub action to build maven projects while pulling dependencies from AWS CodeArtifact
+A GitHub action used as pre-requisite step in **build** workflows (`mvn package`)
+ to configure maven to pull dependencies from AWS CodeArtifact.
+Also used as pre-requisite step in **release** workflows (`mvn deploy`) to push artifacts to AWS CodeArtifact
 
 What it does:
 1. Setup Java + Maven
@@ -10,7 +12,7 @@ What it does:
 
 ## Usage
 
-Below is an example of how to use this action in the **build** workflow.
+Below is an example of how to use this action in the **build** workflow (when you need to pull artifacts from AWS CodeArtifact):
 For release/publish workflows use [agilecustoms/release](https://github.com/agilecustoms/release)
 
 ```yaml
@@ -24,7 +26,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Setup Java
+      - name: Setup Maven
         uses: agilecustoms/setup-maven-codeartifact@v1
         with:
           aws-account: ${{ vars.AWS_ACCOUNT_DIST }}
@@ -38,10 +40,9 @@ jobs:
         run: mvn verify --no-transfer-progress
 ```
 
-This action is designed for use in a **build** workflow when you need to access packages from CodeArtifact.
-In **release** workflow you need to bump a version in `pom.xml` file and add some git tags,
-so please check the [agilecustoms/release](https://github.com/agilecustoms/release) action —
-it represents a holistic release action (uses `setup-maven-codeartifact` under the hood)
+**release** workflow is more complex, it requires version bump in `pom.xml` and setting git tags.
+For release/publish artifacts in AWS CodeArtifact please use [agilecustoms/release](https://github.com/agilecustoms/release) action
+and specifically [AWS CodeArtifact Maven](https://github.com/agilecustoms/release/blob/main/docs/artifact-types/aws-codeartifact-maven.md) section
 
 For build and release workflows it is recommended to use different IAM roles: `/ci/builder` and `/ci/publisher`.
 Builder has read-only access to CodeArtifact, while publisher has write access.
@@ -50,10 +51,8 @@ Below there are two terraform modules that have all necessary permissions to wor
 - **ci-publisher** - [github](https://github.com/agilecustoms/terraform-aws-ci-publisher) - [terraform registry module](https://registry.terraform.io/modules/agilecustoms/ci-publisher/aws/latest)
 
 And this is [example](https://github.com/agilecustoms/terraform-aws-ci-publisher?tab=readme-ov-file#how-to-create-a-role-with-this-policy)
-how to create an AWS IAM role based on these policies with a password-less trust policy,
-so you do not need to store `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` in your repository secrets
-
-Read more about software distribution in AWS in my [LinkedIn article](https://www.linkedin.com/pulse/software-distribution-aws-alexey-chekulaev-ubl0e)
+ how to create an AWS IAM role based on these policies with a password-less trust policy,
+ so you do not need to store `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` in your repository secrets
 
 ## Inputs
 
@@ -80,11 +79,11 @@ All `java-*` inputs are pass through parameters to `actions/setup-java` action, 
 | settings-repositories           | Maven Central | Additional Maven repositories in XML format to be placed before CodeArtifact                            |
 
 Notes:
-1. for `aws-account` it is recommended to have a dedicated AWS account (not dev, not prod) to store artifacts (S3 binaries, CodeArtifact, Docker images)
-2. default settings for `settings-pluginRepositories` and `settings-repositories` are good for projects
-that take 95% of dependencies from Maven Central and left 5% from corporate CodeArtifact.
-Come companies opt in to store all dependencies in CodeArtifact with Maven Central as an _upstream_.
-In this configuration you would want to set `settings-pluginRepositories` and `settings-repositories` to empty string `""`
+1. For `aws-account` it is recommended to have a dedicated AWS account (not dev, not prod) to store artifacts (S3 binaries, CodeArtifact, Docker images)
+2. Default settings for `settings-pluginRepositories` and `settings-repositories` are good for projects
+ that take 95% of dependencies from Maven Central and left 5% from corporate CodeArtifact.
+ Some companies opt in to store all dependencies in CodeArtifact with Maven Central as an _upstream_.
+ In this configuration you would want to set `settings-pluginRepositories` and `settings-repositories` to empty string `""`
 
 ## Local development
 
@@ -149,6 +148,11 @@ jobs:
 ## License
 
 This project is released under the [MIT License](./LICENSE)
+
+## Articles
+
+- [Software distribution in AWS](https://www.linkedin.com/pulse/software-distribution-aws-alexey-chekulaev-ubl0e)
+- [GitFlow vs Build-and-deploy](https://www.linkedin.com/pulse/gitflow-build-and-deploy-alex-chekulaev-lvive)
 
 ## Acknowledgements
 
