@@ -105,7 +105,7 @@ runs:
     # as result we got env vars: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_SESSION_TOKEN
     - name: Login AWS
       if: ${{ inputs.aws-login == 'true' }}
-      uses: aws-actions/configure-aws-credentials@v5.1.0 # TODO: update periodically as it has no floating tags
+      uses: aws-actions/configure-aws-credentials@v5.1.0 # TODO: floating tag v5 is available, but updates must be controlled
       with:
         aws-region: ${{ inputs.aws-region }}
         role-to-assume: arn:aws:iam::${{ inputs.aws-account }}:role/${{ inputs.aws-role }}
