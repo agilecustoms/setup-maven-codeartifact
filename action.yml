@@ -114,6 +114,7 @@ runs:
       id: codeartifact
       shell: bash
       run: |
+        # Generate CodeArtifact token and url
         TOKEN=`aws codeartifact get-authorization-token --domain ${{ inputs.aws-codeartifact-domain }} --query authorizationToken --output text`
         echo "::add-mask::$TOKEN"
         echo "TOKEN=$TOKEN" >> $GITHUB_OUTPUT
@@ -129,6 +130,7 @@ runs:
     - name: Generate Maven settings.xml
       shell: bash
       run: |
+        # Generate Maven settings.xml
         mkdir -p $HOME/.m2
         cat <<EOF > $HOME/.m2/settings.xml
         <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" 
