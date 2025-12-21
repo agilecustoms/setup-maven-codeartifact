@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.4](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.0.3...v2.0.4) (2025-12-21)
+
+### Miscellaneous
+
+* Validate step headline for debuggability ([4a116da](https://github.com/agilecustoms/setup-maven-codeartifact/commit/4a116dae7b7ed06a632a8ec87d026b928e80a001))
+
+
 ## [2.0.3](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.0.2...v2.0.3) (2025-12-21)
 
 ### Miscellaneous
