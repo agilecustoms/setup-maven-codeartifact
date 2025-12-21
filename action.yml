@@ -84,6 +84,7 @@ runs:
     - name: Validate
       shell: bash
       run: |
+        # Validate inputs
         if [[ "${{ inputs.java-cache }}" != "maven" && "${{ inputs.java-cache }}" != "" ]]; then
           echo "Error: input 'java-cache' must be either 'maven' or an empty string." >&2
           exit 1
