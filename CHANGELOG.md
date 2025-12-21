@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.3](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.0.2...v2.0.3) (2025-12-21)
+
+### Miscellaneous
+
+* Add first line comment to display step name in GH workflow logs ([12eabc9](https://github.com/agilecustoms/setup-maven-codeartifact/commit/12eabc919bdffdef9fdc8fa2c53aeb50b33161cd))
+
+
 ## [2.0.2](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.0.1...v2.0.2) (2025-11-04)
 
 ### Documentation
