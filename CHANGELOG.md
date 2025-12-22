@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.0.4...v2.1.0) (2025-12-22)
+
+### Features
+
+* ability to setup java outside ([407a452](https://github.com/agilecustoms/setup-maven-codeartifact/commit/407a452029f23bd71fff7aa79f74e8d0b113b079))
+
+
 ## [2.0.4](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.0.3...v2.0.4) (2025-12-21)
 
 ### Miscellaneous
