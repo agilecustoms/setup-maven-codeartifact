@@ -70,6 +70,7 @@ All `java-*` inputs are pass through parameters to `actions/setup-java` action, 
 | java-cache                      | maven         | Enable Maven dependency caching. Use empty string `""` to disable                                       |
 | java-cachedependency-path`      | (see doc.)    | See description at [actions/setup-java](https://github.com/actions/setup-java?tab=readme-ov-file#usage) |
 | java-distribution               | temurin       | Java distribution. Default is Temurin as it is pre-cached in ubuntu-latest                              |
+| java-setup                      | true          | Setup Java using actions/setup-java. Set to false if Java is setup outside of this action               |
 | java-version                    | 21            | Java version to use. Default is latest LTS (21 as of June 2025)                                         |
 | settings-mirrors                |               | Maven settings.xml mirrors section (XML format)                                                         |
 | settings-pluginGroups           |               | Maven settings.xml pluginGroups section (XML format)                                                    |

@@ -37,6 +37,10 @@ inputs:
     description: 'Java distribution, use Temurin as it is pre-cached in ubuntu-latest'
     required: false
     default: 'temurin'
+  java-setup:
+    description: 'Setup Java using actions/setup-java. Set to false if Java is setup outside of this action'
+    required: false
+    default: 'true'
   java-version:
     description: 'Java version to use'
     required: false
@@ -91,6 +95,7 @@ runs:
         fi
 
     - name: Setup Java
+      if: ${{ inputs.java-setup == 'true' }}
       uses: actions/setup-java@v5
       with:
         java-version: ${{ inputs.java-version }}
@@ -99,6 +104,7 @@ runs:
         cache-dependency-path: ${{ inputs.java-cache-dependency-path }}
 
     - name: Info
+      if: ${{ inputs.java-setup == 'true' }}
       shell: bash
       run: mvn -v
 
