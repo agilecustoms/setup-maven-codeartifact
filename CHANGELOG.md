@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.1.0...v2.1.1) (2025-12-30)
+
+### Miscellaneous
+
+* remove 'mvn -v' ([7ed448a](https://github.com/agilecustoms/setup-maven-codeartifact/commit/7ed448ab0e32d8e53c5d130e5c036efceefa2622))
+
+
 ## [2.1.0](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.0.4...v2.1.0) (2025-12-22)
 
 ### Features
