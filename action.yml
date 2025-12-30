@@ -103,11 +103,6 @@ runs:
         cache: ${{ inputs.java-cache }}
         cache-dependency-path: ${{ inputs.java-cache-dependency-path }}
 
-    - name: Info
-      if: ${{ inputs.java-setup == 'true' }}
-      shell: bash
-      run: mvn -v
-
     # receives a JWT from the GitHub OIDC provider, and then requests an access token from AWS
     # as result we got env vars: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_SESSION_TOKEN
     - name: Login AWS
