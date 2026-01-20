@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.2](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.1.1...v2.1.2) (2026-01-20)
+
+### Miscellaneous
+
+* use new actions/checkout@v6 ([505aa43](https://github.com/agilecustoms/setup-maven-codeartifact/commit/505aa43627bfb877a2b8d7a1b19edfaa55d6ab5a))
+
+
 ## [2.1.1](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.1.0...v2.1.1) (2025-12-30)
 
 ### Miscellaneous
