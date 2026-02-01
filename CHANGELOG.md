@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.3](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.1.2...v2.1.3) (2026-02-01)
+
+### Miscellaneous
+
+* get rid of npm-extra-deps ([df330b6](https://github.com/agilecustoms/setup-maven-codeartifact/commit/df330b6aaa5393818a93744af2c44ec41431750e))
+
+
 ## [2.1.2](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.1.1...v2.1.2) (2026-01-20)
 
 ### Miscellaneous
