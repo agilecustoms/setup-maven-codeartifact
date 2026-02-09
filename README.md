@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Setup Maven
-        uses: agilecustoms/setup-maven-codeartifact@v1
+        uses: agilecustoms/setup-maven-codeartifact@v2
         with:
           aws-account: ${{ vars.AWS_ACCOUNT_DIST }}
           aws-region: us-east-1
@@ -41,7 +41,7 @@ jobs:
 ```
 
 **release** workflow is more complex, it requires version bump in `pom.xml` and setting git tags.
-For release/publish artifacts in AWS CodeArtifact please use [agilecustoms/release](https://github.com/agilecustoms/release) action
+To release/publish artifacts in AWS CodeArtifact please use [agilecustoms/release](https://github.com/agilecustoms/release) action
 and specifically [AWS CodeArtifact Maven](https://github.com/agilecustoms/release/blob/main/docs/artifact-types/aws-codeartifact-maven.md) section
 
 For build and release workflows it is recommended to use different IAM roles: `/ci/builder` and `/ci/publisher`.
