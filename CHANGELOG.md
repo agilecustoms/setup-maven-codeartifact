@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.1.4...v2.2.0) (2026-03-17)
+
+### Features
+
+* upgrade downstream gh action to version that support Node 24 ([cf9d452](https://github.com/agilecustoms/setup-maven-codeartifact/commit/cf9d452acdd1ddc1a54cfc71ae96d179f10ce8a1))
+
+
 ## [2.1.4](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.1.3...v2.1.4) (2026-02-09)
 
 ### Documentation
