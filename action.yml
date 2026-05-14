@@ -89,6 +89,10 @@ runs:
       shell: bash
       run: |
         # Validate inputs
+        if [[ -z "${{ inputs.aws-codeartifact-repository }}" ]]; then
+          echo "Input 'aws-codeartifact-repository' must not be empty"
+          exit 1
+        fi
         if [[ "${{ inputs.java-cache }}" != "maven" && "${{ inputs.java-cache }}" != "" ]]; then
           echo "Error: input 'java-cache' must be either 'maven' or an empty string." >&2
           exit 1
