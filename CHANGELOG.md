@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.2.0...v2.3.0) (2026-05-14)
+
+### Features
+
+* add validation that aws-codeartifact-repository is not empty ([8e118c6](https://github.com/agilecustoms/setup-maven-codeartifact/commit/8e118c6b17de59bda1acb023605042490ae664e5))
+
+
 ## [2.2.0](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.1.4...v2.2.0) (2026-03-17)
 
 ### Features
