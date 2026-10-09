@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.1](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.3.0...v2.3.1) (2026-10-09)
+
+### Miscellaneous
+
+* update GitHub actions to latest versions ([3704a02](https://github.com/agilecustoms/setup-maven-codeartifact/commit/3704a02daf070e88cc3daf0d38ecd9568efe2a02))
+
+
 ## [2.3.0](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.2.0...v2.3.0) (2026-05-14)
 
 ### Features
