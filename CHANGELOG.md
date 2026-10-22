@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.3.2](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.3.1...v2.3.2) (2026-10-22)
+
+### Documentation
+
+* update config, it works more correct for maven 4 ([fbbdc76](https://github.com/agilecustoms/setup-maven-codeartifact/commit/fbbdc760abb6ca3d3552faa11ba231997ff9478e))
+
+### Miscellaneous
+
+* unify .gitignore sections [skip ci] ([5c2d177](https://github.com/agilecustoms/setup-maven-codeartifact/commit/5c2d1772f2532ce0e5fc009cc7a22cbc3ebfe966))
+
+
 ## [2.3.1](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.3.0...v2.3.1) (2026-10-09)
 
 ### Miscellaneous
