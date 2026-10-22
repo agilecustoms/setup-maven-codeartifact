@@ -1,9 +1,11 @@
 <settings>
+    <!-- explicit activation (not activeByDefault): Maven 4 ignores activeByDefault profiles when resolving parents of multi-module projects -->
+    <activeProfiles>
+        <activeProfile>codeartifact</activeProfile>
+    </activeProfiles>
     <profiles>
         <profile>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
+            <id>codeartifact</id>
             <repositories>
                 <repository>
                     <id>central</id>
