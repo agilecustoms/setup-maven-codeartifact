@@ -57,7 +57,7 @@ inputs:
     default: |
       <pluginRepository>
         <id>central</id>
-        <url>https://central.maven.org/maven2/</url>
+        <url>https://repo.maven.apache.org/maven2/</url>
       </pluginRepository>
       <pluginRepository>
         <id>repo1</id>
@@ -75,7 +75,7 @@ inputs:
     default: |
       <repository>
         <id>central</id>
-        <url>https://central.maven.org/maven2/</url>
+        <url>https://repo.maven.apache.org/maven2/</url>
       </repository>
       <repository>
         <id>repo1</id>
