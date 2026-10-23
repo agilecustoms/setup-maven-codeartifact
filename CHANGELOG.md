@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.0](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.3.2...v2.4.0) (2026-10-23)
+
+### Features
+
+* use repo.maven.apache.org for 'central' in default repositories ([73d304a](https://github.com/agilecustoms/setup-maven-codeartifact/commit/73d304a02d3ba0bc8bf48ec4c9b3b21c9106e0ee))
+
+
 ## [2.3.2](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.3.1...v2.3.2) (2026-10-22)
 
 ### Documentation
