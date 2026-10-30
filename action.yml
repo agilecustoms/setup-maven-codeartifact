@@ -87,16 +87,10 @@ runs:
   steps:
     - name: Validate
       shell: bash
-      run: |
-        # Validate inputs
-        if [[ -z "${{ inputs.aws-codeartifact-repository }}" ]]; then
-          echo "Input 'aws-codeartifact-repository' must not be empty"
-          exit 1
-        fi
-        if [[ "${{ inputs.java-cache }}" != "maven" && "${{ inputs.java-cache }}" != "" ]]; then
-          echo "Error: input 'java-cache' must be either 'maven' or an empty string." >&2
-          exit 1
-        fi
+      env:
+        REPOSITORY: ${{ inputs.aws-codeartifact-repository }}
+        JAVA_CACHE: ${{ inputs.java-cache }}
+      run: bash "$GITHUB_ACTION_PATH/scripts/validate.sh"
 
     - name: Setup Java
       if: ${{ inputs.java-setup == 'true' }}
@@ -116,67 +110,34 @@ runs:
         aws-region: ${{ inputs.aws-region }}
         role-to-assume: arn:aws:iam::${{ inputs.aws-account }}:role/${{ inputs.aws-role }}
 
+    # REPO_ID, TOKEN and HOST are used in settings.xml file (which used both in build and release jobs, just different IAM roles)
+    # HOST is also used in parent pom.xml 'distributionManagement', so it is additionally put in env variable 'ARTIFACT_STORE_HOST'.
+    # Env variables are JOB-scoped, so it gets available in next step when you call 'mvn deploy'
     - name: Generate CodeArtifact token and url
       id: codeartifact
       shell: bash
-      run: |
-        # Generate CodeArtifact token and url
-        TOKEN=`aws codeartifact get-authorization-token --domain ${{ inputs.aws-codeartifact-domain }} --query authorizationToken --output text`
-        echo "::add-mask::$TOKEN"
-        echo "TOKEN=$TOKEN" >> $GITHUB_OUTPUT
-        HOST="${{ inputs.aws-codeartifact-domain }}-${{ inputs.aws-account }}.d.codeartifact.${{ inputs.aws-region }}.amazonaws.com"
-        echo "HOST=$HOST" >> $GITHUB_OUTPUT
-        echo "ARTIFACT_STORE_HOST=$HOST" >> $GITHUB_ENV
-        REPO_ID="${{ inputs.aws-codeartifact-domain }}-${{ inputs.aws-codeartifact-repository }}"
-        echo "REPO_ID=$REPO_ID" >> $GITHUB_OUTPUT
-      # REPO_ID, TOKEN and HOST are used in settings.xml file (which used both in build and release jobs, just different IAM roles)
-      # HOST is also used in parent pom.xml 'distributionManagement', so it is additionally put in env variable 'ARTIFACT_STORE_URL'.
-      # Env variables are JOB-scoped, so it gets available in next step when you call 'mvn deploy'
+      env:
+        ACCOUNT: ${{ inputs.aws-account }}
+        DOMAIN: ${{ inputs.aws-codeartifact-domain }}
+        REGION: ${{ inputs.aws-region }}
+        REPOSITORY: ${{ inputs.aws-codeartifact-repository }}
+      run: bash "$GITHUB_ACTION_PATH/scripts/codeartifact.sh"
 
+    # inputs are passed via env (not ${{ }} in script), so their content is not interpreted by shell
     - name: Generate Maven settings.xml
       shell: bash
-      run: |
-        # Generate Maven settings.xml
-        mkdir -p $HOME/.m2
-        cat <<EOF > $HOME/.m2/settings.xml
-        <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" 
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
-          <activeProfiles>
-            <activeProfile>github</activeProfile>
-          </activeProfiles>
-          <profiles>
-            <profile>
-              <id>github</id>
-              <properties>${{ inputs.settings-profile-properties }}</properties>
-              <repositories>
-                ${{ inputs.settings-repositories }}
-                <repository>
-                  <id>${{ steps.codeartifact.outputs.REPO_ID }}</id>
-                  <url>https://${{ steps.codeartifact.outputs.HOST }}/${{ inputs.aws-codeartifact-repository }}/maven/</url>
-                </repository>
-              </repositories>
-              <pluginRepositories>
-                ${{ inputs.settings-pluginRepositories }}
-                <pluginRepository>
-                  <id>${{ steps.codeartifact.outputs.REPO_ID }}</id>
-                  <url>https://${{ steps.codeartifact.outputs.HOST }}/${{ inputs.aws-codeartifact-repository }}/maven/</url>
-                </pluginRepository>
-              </pluginRepositories>
-            </profile>
-          </profiles>
-          <servers>
-            <server>
-              <id>${{ steps.codeartifact.outputs.REPO_ID }}</id>
-              <username>aws</username>
-              <password>${{ steps.codeartifact.outputs.TOKEN }}</password>
-            </server>
-          </servers>
-          <mirrors>${{ inputs.settings-mirrors }}</mirrors>
-          <pluginGroups>${{ inputs.settings-pluginGroups }}</pluginGroups>
-          <proxies>${{ inputs.settings-proxies }}</proxies>
-        </settings>
-        EOF
+      env:
+        REPOSITORY: ${{ inputs.aws-codeartifact-repository }}
+        REPO_ID: ${{ steps.codeartifact.outputs.REPO_ID }}
+        HOST: ${{ steps.codeartifact.outputs.HOST }}
+        TOKEN: ${{ steps.codeartifact.outputs.TOKEN }}
+        SETTINGS_MIRRORS: ${{ inputs.settings-mirrors }}
+        SETTINGS_PLUGIN_GROUPS: ${{ inputs.settings-pluginGroups }}
+        SETTINGS_PLUGIN_REPOSITORIES: ${{ inputs.settings-pluginRepositories }}
+        SETTINGS_PROFILE_PROPERTIES: ${{ inputs.settings-profile-properties }}
+        SETTINGS_PROXIES: ${{ inputs.settings-proxies }}
+        SETTINGS_REPOSITORIES: ${{ inputs.settings-repositories }}
+      run: bash "$GITHUB_ACTION_PATH/scripts/settings-xml.sh"
 
 #    - name: Debug
 #      shell: bash
