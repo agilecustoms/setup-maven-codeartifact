@@ -4,7 +4,7 @@
 # Outputs: TOKEN, HOST, REPO_ID. Env: ARTIFACT_STORE_HOST
 set -eo pipefail
 
-TOKEN=$(aws codeartifact get-authorization-token --domain "$DOMAIN" --query authorizationToken --output text)
+TOKEN=$(aws codeartifact get-authorization-token --domain "$DOMAIN" --domain-owner "$ACCOUNT" --query authorizationToken --output text)
 echo "::add-mask::$TOKEN"
 HOST="$DOMAIN-$ACCOUNT.d.codeartifact.$REGION.amazonaws.com"
 REPO_ID="$DOMAIN-$REPOSITORY"
