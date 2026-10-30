@@ -4,11 +4,13 @@
 # Outputs: TOKEN, HOST, REPO_ID. Env: ARTIFACT_STORE_HOST
 set -eo pipefail
 
-TOKEN=`aws codeartifact get-authorization-token --domain $DOMAIN --query authorizationToken --output text`
+TOKEN=$(aws codeartifact get-authorization-token --domain "$DOMAIN" --query authorizationToken --output text)
 echo "::add-mask::$TOKEN"
-echo "TOKEN=$TOKEN" >> $GITHUB_OUTPUT
 HOST="$DOMAIN-$ACCOUNT.d.codeartifact.$REGION.amazonaws.com"
-echo "HOST=$HOST" >> $GITHUB_OUTPUT
-echo "ARTIFACT_STORE_HOST=$HOST" >> $GITHUB_ENV
 REPO_ID="$DOMAIN-$REPOSITORY"
-echo "REPO_ID=$REPO_ID" >> $GITHUB_OUTPUT
+{
+  echo "TOKEN=$TOKEN"
+  echo "HOST=$HOST"
+  echo "REPO_ID=$REPO_ID"
+} >> "$GITHUB_OUTPUT"
+echo "ARTIFACT_STORE_HOST=$HOST" >> "$GITHUB_ENV"
