@@ -34,12 +34,12 @@
               "section": "Bug Fixes"
             },
             {
-              "type": "docs",
-              "section": "Documentation"
-            },
-            {
               "type": "misc",
               "section": "Miscellaneous"
+            },
+            {
+              "type": "docs",
+              "section": "Documentation"
             }
           ]
         }
