@@ -88,6 +88,9 @@ runs:
     - name: Validate
       shell: bash
       env:
+        ACCOUNT: ${{ inputs.aws-account }}
+        DOMAIN: ${{ inputs.aws-codeartifact-domain }}
+        REGION: ${{ inputs.aws-region }}
         REPOSITORY: ${{ inputs.aws-codeartifact-repository }}
         JAVA_CACHE: ${{ inputs.java-cache }}
       run: bash "$GITHUB_ACTION_PATH/scripts/validate.sh"
