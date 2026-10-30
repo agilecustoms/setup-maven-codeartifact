@@ -6,13 +6,13 @@ on:
       - main
 
 jobs:
-  Lint:
-    uses: ./.github/workflows/lint.yml
+  Validate:
+    uses: ./.github/workflows/validate.yml
     permissions:
       contents: read
 
   Release:
-    needs: Lint
+    needs: Validate
     runs-on: ubuntu-latest
     environment: release
     steps:

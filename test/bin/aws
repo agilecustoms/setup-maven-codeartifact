@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Fake AWS CLI for tests: logs arguments in $RUNNER_TEMP/aws.log and prints a fake CodeArtifact token
+echo "$*" >> "$RUNNER_TEMP/aws.log"
+echo "fake-token"

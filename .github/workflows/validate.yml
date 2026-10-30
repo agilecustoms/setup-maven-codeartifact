@@ -1,0 +1,214 @@
+name: Validate
+
+on:
+  push:
+    branches-ignore:
+      - main
+  workflow_call: # called from 'release' workflow
+
+# Tests need no AWS account and no secrets (so they also run in forks):
+# 'aws-login' and 'java-setup' are disabled, 'aws' CLI is replaced by a fake (test/bin/aws) that logs its arguments
+# and prints a fake token, so the action runs end to end and generates ~/.m2/settings.xml
+# Fake 'aws' is used in Input-Validation too: if validation is broken, the action succeeds and the test catches it
+jobs:
+  Lint:
+    runs-on: ubuntu-slim
+    permissions:
+      contents: read # required for actions/checkout
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      # shellcheck is preinstalled in GH Ubuntu image
+      - name: Shellcheck
+        run: shellcheck scripts/*.sh test/bin/aws
+
+  Input-Validation:
+    runs-on: ubuntu-slim
+    permissions:
+      contents: read # required for actions/checkout
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Setup fake AWS CLI
+        run: echo "$GITHUB_WORKSPACE/test/bin" >> "$GITHUB_PATH"
+
+
+      - name: Test 1. Should fail if aws-account is empty
+        id: test1
+        continue-on-error: true
+        uses: ./
+        with:
+          aws-login: false
+          java-setup: false
+          aws-account: ''
+          aws-codeartifact-domain: mycompany
+          aws-region: us-east-1
+
+      - name: Test 1. Verify it failed
+        if: steps.test1.outcome != 'failure'
+        run: |
+          echo "Expected failure, got ${{ steps.test1.outcome }}"
+          exit 1
+
+
+      - name: Test 2. Should fail if aws-codeartifact-domain is empty
+        id: test2
+        continue-on-error: true
+        uses: ./
+        with:
+          aws-login: false
+          java-setup: false
+          aws-account: '123456789012'
+          aws-codeartifact-domain: ''
+          aws-region: us-east-1
+
+      - name: Test 2. Verify it failed
+        if: steps.test2.outcome != 'failure'
+        run: |
+          echo "Expected failure, got ${{ steps.test2.outcome }}"
+          exit 1
+
+
+      - name: Test 3. Should fail if aws-region is empty
+        id: test3
+        continue-on-error: true
+        uses: ./
+        with:
+          aws-login: false
+          java-setup: false
+          aws-account: '123456789012'
+          aws-codeartifact-domain: mycompany
+          aws-region: ''
+
+      - name: Test 3. Verify it failed
+        if: steps.test3.outcome != 'failure'
+        run: |
+          echo "Expected failure, got ${{ steps.test3.outcome }}"
+          exit 1
+
+
+      - name: Test 4. Should fail if aws-codeartifact-repository is empty
+        id: test4
+        continue-on-error: true
+        uses: ./
+        with:
+          aws-login: false
+          java-setup: false
+          aws-account: '123456789012'
+          aws-codeartifact-domain: mycompany
+          aws-codeartifact-repository: ''
+          aws-region: us-east-1
+
+      - name: Test 4. Verify it failed
+        if: steps.test4.outcome != 'failure'
+        run: |
+          echo "Expected failure, got ${{ steps.test4.outcome }}"
+          exit 1
+
+
+      - name: Test 5. Should fail if java-cache is neither 'maven' nor empty
+        id: test5
+        continue-on-error: true
+        uses: ./
+        with:
+          aws-login: false
+          java-setup: false
+          aws-account: '123456789012'
+          aws-codeartifact-domain: mycompany
+          aws-region: us-east-1
+          java-cache: gradle
+
+      - name: Test 5. Verify it failed
+        if: steps.test5.outcome != 'failure'
+        run: |
+          echo "Expected failure, got ${{ steps.test5.outcome }}"
+          exit 1
+
+  # ubuntu-latest (not slim): has Java and Maven preinstalled to check that Maven can read generated settings.xml
+  E2E:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read # required for actions/checkout
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Setup fake AWS CLI
+        run: echo "$GITHUB_WORKSPACE/test/bin" >> "$GITHUB_PATH"
+
+
+      - name: Test 1. Should generate settings.xml with default inputs
+        uses: ./
+        with:
+          aws-login: false
+          java-setup: false
+          aws-account: '123456789012'
+          aws-codeartifact-domain: mycompany
+          aws-region: us-east-1
+
+      - name: Test 1. Verify settings.xml
+        run: diff test/expected.settings.xml ~/.m2/settings.xml
+
+      - name: Test 1. Verify token is requested for aws-account and aws-region
+        run: grep -Fx "codeartifact get-authorization-token --domain mycompany --domain-owner 123456789012 --region us-east-1 --query authorizationToken --output text" "$RUNNER_TEMP/aws.log"
+
+      - name: Test 1. Verify ARTIFACT_STORE_HOST env variable
+        run: |
+          expected="mycompany-123456789012.d.codeartifact.us-east-1.amazonaws.com"
+          if [ "$ARTIFACT_STORE_HOST" != "$expected" ]; then
+            echo "Expected ARTIFACT_STORE_HOST='$expected', got '$ARTIFACT_STORE_HOST'"
+            exit 1
+          fi
+
+      # full plugin coordinates: no prefix/version resolution, that would query (fake) CodeArtifact repository too
+      - name: Test 1. Verify Maven can read settings.xml
+        run: mvn --batch-mode --no-transfer-progress org.apache.maven.plugins:maven-help-plugin:3.5.1:effective-settings
+
+
+      # '$' and backticks used to be interpreted by bash (heredoc), Maven '${env.X}' failed with "bad substitution"
+      - name: Test 2. Should keep '$' and backticks in settings-* inputs as is
+        uses: ./
+        with:
+          aws-login: false
+          java-setup: false
+          aws-account: '123456789012'
+          aws-codeartifact-domain: mycompany
+          aws-region: us-east-1
+          settings-profile-properties: '<my.home>${env.HOME}</my.home>'
+          settings-proxies: '<proxy><id>p</id><password>p$ss`id`</password></proxy>'
+
+      - name: Test 2. Verify settings.xml
+        env:
+          PROPERTIES: '<properties><my.home>${env.HOME}</my.home></properties>'
+          PROXIES: '<proxies><proxy><id>p</id><password>p$ss`id`</password></proxy></proxies>'
+        run: |
+          grep -F "$PROPERTIES" ~/.m2/settings.xml
+          grep -F "$PROXIES" ~/.m2/settings.xml
+
+
+      - name: Test 3. Should generate settings.xml without default repositories (CodeArtifact only)
+        uses: ./
+        with:
+          aws-login: false
+          java-setup: false
+          aws-account: '123456789012'
+          aws-codeartifact-domain: mycompany
+          aws-region: us-east-1
+          settings-repositories: ''
+          settings-pluginRepositories: ''
+
+      - name: Test 3. Verify settings.xml
+        run: |
+          if grep -E "<id>(central|repo1)</id>" ~/.m2/settings.xml; then
+            echo "Expected no default repositories"
+            exit 1
+          fi
+          test "$(grep -c "<id>mycompany-maven</id>" ~/.m2/settings.xml)" -eq 3 # repository, pluginRepository, server
