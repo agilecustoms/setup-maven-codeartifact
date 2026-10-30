@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.5.0](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.4.0...v2.5.0) (2026-10-30)
+
+### Features
+
+* validate that required inputs aws-account, aws-codeartifact-domain, aws-region are not empty ([a0232fb](https://github.com/agilecustoms/setup-maven-codeartifact/commit/a0232fb55db8b1eae44dd25e44bfb4fe09618a6a))
+
+### Bug Fixes
+
+* pass aws-account as --domain-owner when requesting CodeArtifact token ([0e8a9f3](https://github.com/agilecustoms/setup-maven-codeartifact/commit/0e8a9f3878ea44b96542e50bfc880ccfdb91ec89))
+* pass aws-region as --region when requesting CodeArtifact token ([366cb45](https://github.com/agilecustoms/setup-maven-codeartifact/commit/366cb45a98e4a3d36a2280f23535c40efdc0630a))
+
+### Documentation
+
+* fix input names java-cache-dependency-path and settings-profile-properties in README ([9c45b3d](https://github.com/agilecustoms/setup-maven-codeartifact/commit/9c45b3d9456e0230ccbf41e42069c18dd26cae0e))
+* quote $GITHUB_OUTPUT in README example ([1923742](https://github.com/agilecustoms/setup-maven-codeartifact/commit/192374299a942a780e28d714fdd09b74c854e5b1))
+
+
 ## [2.4.0](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.3.2...v2.4.0) (2026-10-23)
 
 ### Features
