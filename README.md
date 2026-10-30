@@ -68,14 +68,14 @@ All `java-*` inputs are pass through parameters to `actions/setup-java` action, 
 | **aws-region**                  |               | AWS region where the CodeArtifact domain is located                                                     |
 | aws-role                        | ci/builder    | IAM role to assume for CodeArtifact access                                                              |
 | java-cache                      | maven         | Enable Maven dependency caching. Use empty string `""` to disable                                       |
-| java-cachedependency-path`      | (see doc.)    | See description at [actions/setup-java](https://github.com/actions/setup-java?tab=readme-ov-file#usage) |
+| java-cache-dependency-path      | (see doc.)    | See description at [actions/setup-java](https://github.com/actions/setup-java?tab=readme-ov-file#usage) |
 | java-distribution               | temurin       | Java distribution. Default is Temurin as it is pre-cached in ubuntu-latest                              |
 | java-setup                      | true          | Setup Java using actions/setup-java. Set to false if Java is setup outside of this action               |
 | java-version                    | 21            | Java version to use. Default is latest LTS (21 as of June 2025)                                         |
 | settings-mirrors                |               | Maven settings.xml mirrors section (XML format)                                                         |
 | settings-pluginGroups           |               | Maven settings.xml pluginGroups section (XML format)                                                    |
 | settings-pluginRepositories     | Maven Central | Additional plugin repositories in XML format to be placed in front of CodeArtifact                      |
-| settings-profileproperties`     |               | Maven settings.xml profile properties section (XML format)                                              |
+| settings-profile-properties     |               | Maven settings.xml profile properties section (XML format)                                              |
 | settings-proxies                |               | Maven settings.xml proxies section (XML format)                                                         |
 | settings-repositories           | Maven Central | Additional Maven repositories in XML format to be placed before CodeArtifact                            |
 
