@@ -7,16 +7,9 @@ on:
 
 jobs:
   Lint:
-    runs-on: ubuntu-slim
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-        with:
-          persist-credentials: false
-
-      # shellcheck is preinstalled in GH Ubuntu image
-      - name: Shellcheck
-        run: shellcheck scripts/*.sh
+    uses: ./.github/workflows/lint.yml
+    permissions:
+      contents: read
 
   Release:
     needs: Lint
