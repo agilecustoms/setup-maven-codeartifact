@@ -131,7 +131,7 @@ jobs:
           # generate a SECRET
           PROXY_CONFIG="<config><username>abc</username><password>$SECRET</password></config>"
           echo "::add-mask::$PROXY_CONFIG"
-          echo "CONFIG=$PROXY_CONFIG" >> $GITHUB_OUTPUT
+          echo "CONFIG=$PROXY_CONFIG" >> "$GITHUB_OUTPUT"
 
       - name: Setup Java
         uses: agilecustoms/setup-maven-codeartifact@v2
