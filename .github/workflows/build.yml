@@ -11,7 +11,7 @@ on:
 # and prints a fake token, so the action runs end to end and generates ~/.m2/settings.xml
 # Fake 'aws' is used in Input-Validation too: if validation is broken, the action succeeds and the test catches it
 jobs:
-  Lint:
+  Validate:
     runs-on: ubuntu-slim
     permissions:
       contents: read # required for actions/checkout
@@ -212,3 +212,17 @@ jobs:
             exit 1
           fi
           test "$(grep -c "<id>mycompany-maven</id>" ~/.m2/settings.xml)" -eq 3 # repository, pluginRepository, server
+
+  # Required check for PR merge: one stable name instead of listing every test job in infrastructure-core
+  # if: always() - otherwise when any of them fails this job is skipped, and GitHub treats skipped required check as passed
+  Test:
+    if: always()
+    needs: [ Input-Validation, E2E ]
+    runs-on: ubuntu-slim
+    steps:
+      - name: Check results
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "Results: $RESULTS"
+          for result in $RESULTS; do [ "$result" = success ]; done
