@@ -6,13 +6,13 @@ on:
       - main
 
 jobs:
-  Validate:
-    uses: ./.github/workflows/validate.yml
+  Build:
+    uses: ./.github/workflows/build.yml
     permissions:
       contents: read
 
   Release:
-    needs: Validate
+    needs: Build
     runs-on: ubuntu-latest
     environment: release
     steps:
