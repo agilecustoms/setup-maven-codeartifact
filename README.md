@@ -62,9 +62,9 @@ All `java-*` inputs are pass through parameters to `actions/setup-java` action, 
 | Name                            | Default       | Description                                                                                             |
 |---------------------------------|---------------|---------------------------------------------------------------------------------------------------------|
 | **aws-account** (required)      |               | AWS account number where the CodeArtifact domain is located                                             |
-| aws-login                       | _true_        | Whether to login to AWS. Set to _false_ if you handle AWS login separately                              |
 | **aws-codeartifact-domain**     |               | CodeArtifact domain name                                                                                |
 | **aws-codeartifact-repository** | maven         | CodeArtifact repository name                                                                            |
+| aws-login                       | _true_        | Whether to login to AWS. Set to _false_ if you handle AWS login separately                              |
 | **aws-region**                  |               | AWS region where the CodeArtifact domain is located                                                     |
 | aws-role                        | ci/builder    | IAM role to assume for CodeArtifact access                                                              |
 | java-cache                      | maven         | Enable Maven dependency caching. Use empty string `""` to disable                                       |

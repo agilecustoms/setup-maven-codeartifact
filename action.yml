@@ -8,10 +8,6 @@ inputs:
   aws-account:
     description: 'AWS account number where the CodeArtifact domain is located'
     required: true
-  aws-login:
-    description: 'Login to AWS. Could be false if you login in AWS outside of this action'
-    required: false
-    default: 'true'
   aws-codeartifact-domain:
     description: 'CodeArtifact domain name'
     required: true
@@ -19,6 +15,10 @@ inputs:
     description: 'CodeArtifact repository name'
     default: 'maven' # default repository name
     required: true
+  aws-login:
+    description: 'Login to AWS. Could be false if you login in AWS outside of this action'
+    required: false
+    default: 'true'
   aws-region:
     description: 'AWS region where the CodeArtifact domain is located'
     required: true
