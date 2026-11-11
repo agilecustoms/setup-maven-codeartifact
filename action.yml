@@ -99,10 +99,10 @@ runs:
       if: ${{ inputs.java-setup == 'true' }}
       uses: actions/setup-java@v5
       with:
-        java-version: ${{ inputs.java-version }}
-        distribution: ${{ inputs.java-distribution }}
         cache: ${{ inputs.java-cache }}
         cache-dependency-path: ${{ inputs.java-cache-dependency-path }}
+        distribution: ${{ inputs.java-distribution }}
+        java-version: ${{ inputs.java-version }}
 
     # receives a JWT from the GitHub OIDC provider, and then requests an access token from AWS
     # as result we got env vars: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_SESSION_TOKEN

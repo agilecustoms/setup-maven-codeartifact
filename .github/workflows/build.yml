@@ -44,11 +44,11 @@ jobs:
         continue-on-error: true
         uses: ./
         with:
-          aws-login: false
-          java-setup: false
           aws-account: ''
           aws-codeartifact-domain: mycompany
+          aws-login: false
           aws-region: us-east-1
+          java-setup: false
 
       - name: Test 1. Verify it failed
         if: steps.test1.outcome != 'failure'
@@ -62,11 +62,11 @@ jobs:
         continue-on-error: true
         uses: ./
         with:
-          aws-login: false
-          java-setup: false
           aws-account: '123456789012'
           aws-codeartifact-domain: ''
+          aws-login: false
           aws-region: us-east-1
+          java-setup: false
 
       - name: Test 2. Verify it failed
         if: steps.test2.outcome != 'failure'
@@ -80,11 +80,11 @@ jobs:
         continue-on-error: true
         uses: ./
         with:
-          aws-login: false
-          java-setup: false
           aws-account: '123456789012'
           aws-codeartifact-domain: mycompany
+          aws-login: false
           aws-region: ''
+          java-setup: false
 
       - name: Test 3. Verify it failed
         if: steps.test3.outcome != 'failure'
@@ -98,12 +98,12 @@ jobs:
         continue-on-error: true
         uses: ./
         with:
-          aws-login: false
-          java-setup: false
           aws-account: '123456789012'
           aws-codeartifact-domain: mycompany
           aws-codeartifact-repository: ''
+          aws-login: false
           aws-region: us-east-1
+          java-setup: false
 
       - name: Test 4. Verify it failed
         if: steps.test4.outcome != 'failure'
@@ -117,12 +117,12 @@ jobs:
         continue-on-error: true
         uses: ./
         with:
-          aws-login: false
-          java-setup: false
           aws-account: '123456789012'
           aws-codeartifact-domain: mycompany
+          aws-login: false
           aws-region: us-east-1
           java-cache: gradle
+          java-setup: false
 
       - name: Test 5. Verify it failed
         if: steps.test5.outcome != 'failure'
@@ -148,11 +148,11 @@ jobs:
       - name: Test 1. Should generate settings.xml with default inputs
         uses: ./
         with:
-          aws-login: false
-          java-setup: false
           aws-account: '123456789012'
           aws-codeartifact-domain: mycompany
+          aws-login: false
           aws-region: us-east-1
+          java-setup: false
 
       - name: Test 1. Verify settings.xml
         run: diff test/expected.settings.xml ~/.m2/settings.xml
@@ -177,11 +177,11 @@ jobs:
       - name: Test 2. Should keep '$' and backticks in settings-* inputs as is
         uses: ./
         with:
-          aws-login: false
-          java-setup: false
           aws-account: '123456789012'
           aws-codeartifact-domain: mycompany
+          aws-login: false
           aws-region: us-east-1
+          java-setup: false
           settings-profile-properties: '<my.home>${env.HOME}</my.home>'
           settings-proxies: '<proxy><id>p</id><password>p$ss`id`</password></proxy>'
 
@@ -197,13 +197,13 @@ jobs:
       - name: Test 3. Should generate settings.xml without default repositories (CodeArtifact only)
         uses: ./
         with:
-          aws-login: false
-          java-setup: false
           aws-account: '123456789012'
           aws-codeartifact-domain: mycompany
+          aws-login: false
           aws-region: us-east-1
-          settings-repositories: ''
+          java-setup: false
           settings-pluginRepositories: ''
+          settings-repositories: ''
 
       - name: Test 3. Verify settings.xml
         run: |
