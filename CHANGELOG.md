@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.5.1](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.5.0...v2.5.1) (2026-11-15)
+
+### Miscellaneous
+
+* actions/setup-java v5 -> v6, aws-actions/configure-aws-credentials v6.0.0 -> v6.3.0 ([5034be5](https://github.com/agilecustoms/setup-maven-codeartifact/commit/5034be5daee91e208af905223eb96a56cf74007c))
+* rename Lint job to Validate, add Test job that aggregates Input-Validation and E2E results (required check) [skip ci] ([40ab883](https://github.com/agilecustoms/setup-maven-codeartifact/commit/40ab883c43a416145ca86a32ed0370c720c6054a))
+* rename workflow validate.yml to build.yml (Build), same as other repos [skip ci] ([e5edbdb](https://github.com/agilecustoms/setup-maven-codeartifact/commit/e5edbdbd9f92b2d6ddbddf38da251c0698256610))
+
+### Documentation
+
+* sort inputs alphabetically [skip ci] ([1a360a8](https://github.com/agilecustoms/setup-maven-codeartifact/commit/1a360a8ac0273111eba1ef6b1e638fdab3e8ce53))
+
+
 ## [2.5.0](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.4.0...v2.5.0) (2026-10-30)
 
 ### Features
