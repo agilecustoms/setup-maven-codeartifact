@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.2](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.5.1...v2.5.2) (2026-11-19)
+
+### Dependencies update
+
+* .releaserc.json same as gha-release: build: releases a patch, 'Dependencies update' section ([4584b54](https://github.com/agilecustoms/setup-maven-codeartifact/commit/4584b542fce0cc65eeef21938605244093237e03))
+
+
 ## [2.5.1](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.5.0...v2.5.1) (2026-11-15)
 
 ### Miscellaneous
