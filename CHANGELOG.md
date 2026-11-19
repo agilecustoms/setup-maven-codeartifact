@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.3](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.5.2...v2.5.3) (2026-11-19)
+
+### Dependencies update
+
+* make lint (actionlint, shellcheck of scripts), pre-commit hook and CI Validate job run it ([ff2a6bf](https://github.com/agilecustoms/setup-maven-codeartifact/commit/ff2a6bf1ceefa2cd8895ebb372e79824546c3099))
+
+
 ## [2.5.2](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.5.1...v2.5.2) (2026-11-19)
 
 ### Dependencies update
