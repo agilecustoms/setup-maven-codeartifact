@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.5](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.5.4...v2.5.5) (2026-11-26)
+
+### Documentation
+
+* README structure per repo-standards rule 002 (Required column, checkout v7), AGENTS.md with internals ([251e6b0](https://github.com/agilecustoms/setup-maven-codeartifact/commit/251e6b0c67a48e316682537638e050086ed88b3f))
+
+
 ## [2.5.4](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.5.3...v2.5.4) (2026-11-26)
 
 ### Miscellaneous
