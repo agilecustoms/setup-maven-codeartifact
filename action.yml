@@ -13,8 +13,8 @@ inputs:
     required: true
   aws-codeartifact-repository:
     description: 'CodeArtifact repository name'
+    required: false
     default: 'maven' # default repository name
-    required: true
   aws-login:
     description: 'Login to AWS. Could be false if you login in AWS outside of this action'
     required: false
@@ -24,8 +24,8 @@ inputs:
     required: true
   aws-role:
     description: 'IAM role to assume, good option is /ci/builder'
-    default: 'ci/builder' # this role should have permissions to access CodeArtifact
     required: false
+    default: 'ci/builder' # this role should have permissions to access CodeArtifact
   java-cache:
     description: 'Enabled by default, specify empty string to disable caching'
     required: false
