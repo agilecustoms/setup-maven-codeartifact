@@ -44,7 +44,7 @@ inputs:
   java-version:
     description: 'Java version to use'
     required: false
-    default: '21' # latest LTS as of June 2025
+    default: '21'
   settings-mirrors:
     description: 'settings.xml mirrors section (optional)'
     required: false

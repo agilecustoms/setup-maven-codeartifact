@@ -12,7 +12,8 @@ What it does:
 
 ## Usage
 
-Below is an example of how to use this action in the **build** workflow (when you need to pull artifacts from AWS CodeArtifact):
+Below is an example of how to use this action in the **build** workflow
+(when you need to pull artifacts from AWS CodeArtifact):
 For release/publish workflows use [agilecustoms/release](https://github.com/agilecustoms/release)
 
 ```yaml
@@ -41,63 +42,79 @@ jobs:
 ```
 
 **release** workflow is more complex, it requires version bump in `pom.xml` and setting git tags.
-To release/publish artifacts in AWS CodeArtifact please use [agilecustoms/release](https://github.com/agilecustoms/release) action
-and specifically [AWS CodeArtifact Maven](https://github.com/agilecustoms/release/blob/main/docs/artifact-types/aws-codeartifact-maven.md) section
+To release/publish artifacts in AWS CodeArtifact please use [agilecustoms/release][release] action
+and specifically [AWS CodeArtifact Maven][release-maven] section
 
 For build and release workflows it is recommended to use different IAM roles: `/ci/builder` and `/ci/publisher`.
 Builder has read-only access to CodeArtifact, while publisher has write access.
 Below there are two terraform modules that have all necessary permissions to work with CodeArtifact:
-- **ci-builder** - [github](https://github.com/agilecustoms/terraform-aws-ci-builder) - [terraform registry module](https://registry.terraform.io/modules/agilecustoms/ci-builder/aws/latest)
-- **ci-publisher** - [github](https://github.com/agilecustoms/terraform-aws-ci-publisher) - [terraform registry module](https://registry.terraform.io/modules/agilecustoms/ci-publisher/aws/latest)
+- **ci-builder** - [github][ci-builder-github] - [terraform registry module][ci-builder-registry]
+- **ci-publisher** - [github][ci-publisher-github] - [terraform registry module][ci-publisher-registry]
 
-And this is [example](https://github.com/agilecustoms/terraform-aws-ci-publisher?tab=readme-ov-file#how-to-create-a-role-with-this-policy)
+And this is [example][ci-publisher-role]
  how to create an AWS IAM role based on these policies with a password-less trust policy,
  so you do not need to store `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` in your repository secrets
 
+[release]: https://github.com/agilecustoms/release
+[release-maven]: https://github.com/agilecustoms/release/blob/main/docs/artifact-types/aws-codeartifact-maven.md
+[ci-builder-github]: https://github.com/agilecustoms/terraform-aws-ci-builder
+[ci-builder-registry]: https://registry.terraform.io/modules/agilecustoms/ci-builder/aws/latest
+[ci-publisher-github]: https://github.com/agilecustoms/terraform-aws-ci-publisher
+[ci-publisher-registry]: https://registry.terraform.io/modules/agilecustoms/ci-publisher/aws/latest
+[ci-publisher-role]: https://github.com/agilecustoms/terraform-aws-ci-publisher?tab=readme-ov-file#how-to-create-a-role-with-this-policy
+[setup-java]: https://github.com/actions/setup-java?tab=readme-ov-file#usage
+
 ### Inputs
 
-This action is a combination of few other actions mainly `actions/setup-java` and `aws-actions/configure-aws-credentials`.
-All `java-*` inputs are pass through parameters to `actions/setup-java` action, so please refer to [setup-java documentation](https://github.com/actions/setup-java?tab=readme-ov-file#usage)
+This action is a combination of few other actions mainly `actions/setup-java` and
+`aws-actions/configure-aws-credentials`.
+All `java-*` inputs are pass through parameters to `actions/setup-java` action,
+so please refer to [setup-java documentation][setup-java]
 
-| Name                        | Required | Default       | Description                                                                                             |
-|-----------------------------|----------|---------------|---------------------------------------------------------------------------------------------------------|
-| aws-account                 | yes      |               | AWS account number where the CodeArtifact domain is located                                             |
-| aws-codeartifact-domain     | yes      |               | CodeArtifact domain name                                                                                |
-| aws-codeartifact-repository | no       | maven         | CodeArtifact repository name                                                                            |
-| aws-login                   | no       | _true_        | Whether to login to AWS. Set to _false_ if you handle AWS login separately                              |
-| aws-region                  | yes      |               | AWS region where the CodeArtifact domain is located                                                     |
-| aws-role                    | no       | ci/builder    | IAM role to assume for CodeArtifact access                                                              |
-| java-cache                  | no       | maven         | Enable Maven dependency caching. Use empty string `""` to disable                                       |
-| java-cache-dependency-path  | no       | (see doc.)    | See description at [actions/setup-java](https://github.com/actions/setup-java?tab=readme-ov-file#usage) |
-| java-distribution           | no       | temurin       | Java distribution. Default is Temurin as it is pre-cached in ubuntu-latest                              |
-| java-setup                  | no       | true          | Setup Java using actions/setup-java. Set to false if Java is setup outside of this action               |
-| java-version                | no       | 21            | Java version to use. Default is latest LTS (21 as of June 2025)                                         |
-| settings-mirrors            | no       |               | Maven settings.xml mirrors section (XML format)                                                         |
-| settings-pluginGroups       | no       |               | Maven settings.xml pluginGroups section (XML format)                                                    |
-| settings-pluginRepositories | no       | Maven Central | Additional plugin repositories in XML format to be placed in front of CodeArtifact                      |
-| settings-profile-properties | no       |               | Maven settings.xml profile properties section (XML format)                                              |
-| settings-proxies            | no       |               | Maven settings.xml proxies section (XML format)                                                         |
-| settings-repositories       | no       | Maven Central | Additional Maven repositories in XML format to be placed before CodeArtifact                            |
+| Name                        | Required | Default       | Description                                                 |
+|-----------------------------|----------|---------------|-------------------------------------------------------------|
+| aws-account                 | yes      |               | AWS account number where the CodeArtifact domain is located |
+| aws-codeartifact-domain     | yes      |               | CodeArtifact domain name                                    |
+| aws-codeartifact-repository | no       | maven         | CodeArtifact repository name                                |
+| aws-login                   | no       | _true_        | Login to AWS, _false_ if you handle AWS login separately    |
+| aws-region                  | yes      |               | AWS region where the CodeArtifact domain is located         |
+| aws-role                    | no       | ci/builder    | IAM role to assume for CodeArtifact access                  |
+| java-cache                  | no       | maven         | Maven dependency cache, empty string `""` disables it       |
+| java-cache-dependency-path  | no       | (see doc.)    | See description at [actions/setup-java][setup-java]         |
+| java-distribution           | no       | temurin       | Java distribution, Temurin is pre-cached in ubuntu-latest   |
+| java-setup                  | no       | true          | Setup Java with actions/setup-java, false if done outside   |
+| java-version                | no       | 21            | Java version to use                                         |
+| settings-mirrors            | no       |               | Maven settings.xml mirrors section (XML format)             |
+| settings-pluginGroups       | no       |               | Maven settings.xml pluginGroups section (XML format)        |
+| settings-pluginRepositories | no       | Maven Central | Plugin repositories (XML) placed in front of CodeArtifact   |
+| settings-profile-properties | no       |               | Maven settings.xml profile properties section (XML format)  |
+| settings-proxies            | no       |               | Maven settings.xml proxies section (XML format)             |
+| settings-repositories       | no       | Maven Central | Maven repositories (XML) placed in front of CodeArtifact    |
 
 Notes:
-1. For `aws-account` it is recommended to have a dedicated AWS account (not dev, not prod) to store artifacts (S3 binaries, CodeArtifact, Docker images)
+1. For `aws-account` it is recommended to have a dedicated AWS account (not dev, not prod) to store artifacts
+   (S3 binaries, CodeArtifact, Docker images)
 2. Default settings for `settings-pluginRepositories` and `settings-repositories` are good for projects
  that take 95% of dependencies from Maven Central and left 5% from corporate CodeArtifact.
  Some companies opt in to store all dependencies in CodeArtifact with Maven Central as an _upstream_.
- In this configuration you would want to set `settings-pluginRepositories` and `settings-repositories` to empty string `""`
+ In this configuration you would want to set `settings-pluginRepositories` and `settings-repositories` to `""`
 
 ### Local development
 
-Under the hood, this action generates a [settings.xml](./ci.settings.xml) file with CodeArtifact repository and credentials.
+Under the hood, this action generates a [settings.xml](./ci.settings.xml) file
+with CodeArtifact repository and credentials.
 Note:
-- maven central and its mirror are used as primary and secondary repositories for dependencies and plugins, your company CodeArtifact is in 3rd place.
-If you use CodeArtifact upstream feature, feel free to remove maven central and its mirror from `repositories` and `pluginRepositories` sections
+- maven central and its mirror are used as primary and secondary repositories for dependencies and plugins,
+  your company CodeArtifact is in 3rd place.
+If you use CodeArtifact upstream feature,
+feel free to remove maven central and its mirror from `repositories` and `pluginRepositories` sections
 - your company repository id has format `{aws-codeartifact-domain}-{aws-codeartifact-repository}` like `mycompany-maven`
 
 With this knowledge, you can place a local version of [settings.xml](./local.settings.xml) on developers' machines
 to give them read-only access to maven packages in corporate CodeArtifact.
 As you can see this `settings.xml` file has two env variables: `ARTIFACT_STORE_HOST` and `ARTIFACT_STORE_TOKEN`.
-Host is fixed (after you create CodeArtifact domain), you can place these two lines in your shell configuration (`.zshrc`, `.bashrc`):
+Host is fixed (after you create CodeArtifact domain), you can place these two lines 
+in your shell configuration (`.zshrc`, `.bashrc`):
 ```shell
 export AWS_ACCOUNT_DIST=123456789012
 export ARTIFACT_STORE_HOST="mycompany-$AWS_ACCOUNT_DIST.d.codeartifact.us-east-1.amazonaws.com"
