@@ -55,15 +55,6 @@ And this is [example][ci-publisher-role]
  how to create an AWS IAM role based on these policies with a password-less trust policy,
  so you do not need to store `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` in your repository secrets
 
-[release]: https://github.com/agilecustoms/release
-[release-maven]: https://github.com/agilecustoms/release/blob/main/docs/artifact-types/aws-codeartifact-maven.md
-[ci-builder-github]: https://github.com/agilecustoms/terraform-aws-ci-builder
-[ci-builder-registry]: https://registry.terraform.io/modules/agilecustoms/ci-builder/aws/latest
-[ci-publisher-github]: https://github.com/agilecustoms/terraform-aws-ci-publisher
-[ci-publisher-registry]: https://registry.terraform.io/modules/agilecustoms/ci-publisher/aws/latest
-[ci-publisher-role]: https://github.com/agilecustoms/terraform-aws-ci-publisher?tab=readme-ov-file#how-to-create-a-role-with-this-policy
-[setup-java]: https://github.com/actions/setup-java?tab=readme-ov-file#usage
-
 ### Inputs
 
 This action is a combination of few other actions mainly `actions/setup-java` and
@@ -176,3 +167,12 @@ This project is released under the [MIT License](./LICENSE)
 
 - https://github.com/s4u/maven-settings-action — first action I tried, but it doesn't support pluginRepositories
 - https://github.com/whelk-io/maven-settings-xml-action — used this during 2024, then wrote my own action 
+
+[ci-builder-github]: https://github.com/agilecustoms/terraform-aws-ci-builder
+[ci-builder-registry]: https://registry.terraform.io/modules/agilecustoms/ci-builder/aws/latest
+[ci-publisher-github]: https://github.com/agilecustoms/terraform-aws-ci-publisher
+[ci-publisher-registry]: https://registry.terraform.io/modules/agilecustoms/ci-publisher/aws/latest
+[ci-publisher-role]: https://github.com/agilecustoms/terraform-aws-ci-publisher#how-to-create-a-role-with-this-policy
+[release]: https://github.com/agilecustoms/release
+[release-maven]: https://github.com/agilecustoms/release/blob/main/docs/artifact-types/aws-codeartifact-maven.md
+[setup-java]: https://github.com/actions/setup-java#usage
