@@ -1,4 +1,4 @@
-# About
+# setup-maven-codeartifact
 
 A GitHub action used as pre-requisite step in **build** workflows (`mvn package`)
  to configure maven to pull dependencies from AWS CodeArtifact.
@@ -24,7 +24,7 @@ jobs:
       contents: read # required for actions/checkout
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Maven
         uses: agilecustoms/setup-maven-codeartifact@v2
@@ -54,30 +54,30 @@ And this is [example](https://github.com/agilecustoms/terraform-aws-ci-publisher
  how to create an AWS IAM role based on these policies with a password-less trust policy,
  so you do not need to store `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` in your repository secrets
 
-## Inputs
+### Inputs
 
 This action is a combination of few other actions mainly `actions/setup-java` and `aws-actions/configure-aws-credentials`.
 All `java-*` inputs are pass through parameters to `actions/setup-java` action, so please refer to [setup-java documentation](https://github.com/actions/setup-java?tab=readme-ov-file#usage)
 
-| Name                            | Default       | Description                                                                                             |
-|---------------------------------|---------------|---------------------------------------------------------------------------------------------------------|
-| **aws-account** (required)      |               | AWS account number where the CodeArtifact domain is located                                             |
-| **aws-codeartifact-domain**     |               | CodeArtifact domain name                                                                                |
-| **aws-codeartifact-repository** | maven         | CodeArtifact repository name                                                                            |
-| aws-login                       | _true_        | Whether to login to AWS. Set to _false_ if you handle AWS login separately                              |
-| **aws-region**                  |               | AWS region where the CodeArtifact domain is located                                                     |
-| aws-role                        | ci/builder    | IAM role to assume for CodeArtifact access                                                              |
-| java-cache                      | maven         | Enable Maven dependency caching. Use empty string `""` to disable                                       |
-| java-cache-dependency-path      | (see doc.)    | See description at [actions/setup-java](https://github.com/actions/setup-java?tab=readme-ov-file#usage) |
-| java-distribution               | temurin       | Java distribution. Default is Temurin as it is pre-cached in ubuntu-latest                              |
-| java-setup                      | true          | Setup Java using actions/setup-java. Set to false if Java is setup outside of this action               |
-| java-version                    | 21            | Java version to use. Default is latest LTS (21 as of June 2025)                                         |
-| settings-mirrors                |               | Maven settings.xml mirrors section (XML format)                                                         |
-| settings-pluginGroups           |               | Maven settings.xml pluginGroups section (XML format)                                                    |
-| settings-pluginRepositories     | Maven Central | Additional plugin repositories in XML format to be placed in front of CodeArtifact                      |
-| settings-profile-properties     |               | Maven settings.xml profile properties section (XML format)                                              |
-| settings-proxies                |               | Maven settings.xml proxies section (XML format)                                                         |
-| settings-repositories           | Maven Central | Additional Maven repositories in XML format to be placed before CodeArtifact                            |
+| Name                        | Required | Default       | Description                                                                                             |
+|-----------------------------|----------|---------------|---------------------------------------------------------------------------------------------------------|
+| aws-account                 | yes      |               | AWS account number where the CodeArtifact domain is located                                             |
+| aws-codeartifact-domain     | yes      |               | CodeArtifact domain name                                                                                |
+| aws-codeartifact-repository | no       | maven         | CodeArtifact repository name                                                                            |
+| aws-login                   | no       | _true_        | Whether to login to AWS. Set to _false_ if you handle AWS login separately                              |
+| aws-region                  | yes      |               | AWS region where the CodeArtifact domain is located                                                     |
+| aws-role                    | no       | ci/builder    | IAM role to assume for CodeArtifact access                                                              |
+| java-cache                  | no       | maven         | Enable Maven dependency caching. Use empty string `""` to disable                                       |
+| java-cache-dependency-path  | no       | (see doc.)    | See description at [actions/setup-java](https://github.com/actions/setup-java?tab=readme-ov-file#usage) |
+| java-distribution           | no       | temurin       | Java distribution. Default is Temurin as it is pre-cached in ubuntu-latest                              |
+| java-setup                  | no       | true          | Setup Java using actions/setup-java. Set to false if Java is setup outside of this action               |
+| java-version                | no       | 21            | Java version to use. Default is latest LTS (21 as of June 2025)                                         |
+| settings-mirrors            | no       |               | Maven settings.xml mirrors section (XML format)                                                         |
+| settings-pluginGroups       | no       |               | Maven settings.xml pluginGroups section (XML format)                                                    |
+| settings-pluginRepositories | no       | Maven Central | Additional plugin repositories in XML format to be placed in front of CodeArtifact                      |
+| settings-profile-properties | no       |               | Maven settings.xml profile properties section (XML format)                                              |
+| settings-proxies            | no       |               | Maven settings.xml proxies section (XML format)                                                         |
+| settings-repositories       | no       | Maven Central | Additional Maven repositories in XML format to be placed before CodeArtifact                            |
 
 Notes:
 1. For `aws-account` it is recommended to have a dedicated AWS account (not dev, not prod) to store artifacts (S3 binaries, CodeArtifact, Docker images)
@@ -86,7 +86,7 @@ Notes:
  Some companies opt in to store all dependencies in CodeArtifact with Maven Central as an _upstream_.
  In this configuration you would want to set `settings-pluginRepositories` and `settings-repositories` to empty string `""`
 
-## Local development
+### Local development
 
 Under the hood, this action generates a [settings.xml](./ci.settings.xml) file with CodeArtifact repository and credentials.
 Note:
@@ -110,7 +110,7 @@ TOKEN=$(aws codeartifact get-authorization-token --domain mycompany --query auth
 export ARTIFACT_STORE_TOKEN=$TOKEN
 ```
 
-## Security
+### Security
 
 If you ever find yourself generating and passing a secret in any of the `settings-*` inputs, please mask it first:
 
@@ -123,7 +123,7 @@ jobs:
       contents: read # required for actions/checkout
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Proxy with a secret
         id: proxy
@@ -142,13 +142,13 @@ jobs:
           settings-proxies: ${{ steps.proxy.outputs.CONFIG }}
 ```
 
-## Misc
-
-- [Troubleshooting](./docs/troubleshooting.md)
-
 ## License
 
 This project is released under the [MIT License](./LICENSE)
+
+## Misc
+
+- [Troubleshooting](./docs/troubleshooting.md)
 
 ## Articles
 
