@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.5.6](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.5.5...v2.5.6) (2026-11-26)
+
+### Documentation
+
+* README lines within 120 chars, reference-style links ([36b9323](https://github.com/agilecustoms/setup-maven-codeartifact/commit/36b93238292a2eb2981e2b833eb3d4c6c323df0f))
+
+### Miscellaneous
+
+* aws-codeartifact-repository required: false (it has a default), inputs keys in order description, required, default ([7504898](https://github.com/agilecustoms/setup-maven-codeartifact/commit/750489884d71aed8c39bcb7ba188ad5e2aedb58e))
+
+
 ## [2.5.5](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.5.4...v2.5.5) (2026-11-26)
 
 ### Documentation
