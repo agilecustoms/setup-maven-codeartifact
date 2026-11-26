@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.4](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.5.3...v2.5.4) (2026-11-26)
+
+### Miscellaneous
+
+* configure-aws-credentials v6.3.0 -> v6.3.1 ([410fbe0](https://github.com/agilecustoms/setup-maven-codeartifact/commit/410fbe0719a34b177593831adc6e7ace9da98437))
+
+
 ## [2.5.3](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.5.2...v2.5.3) (2026-11-19)
 
 ### Dependencies update
