@@ -1,8 +1,5 @@
 # AGENTS.md
 
-Shared agilecustoms rules (git, code style) are in `../tools/agents/AGENTS.md`.
-This file is `setup-maven-codeartifact` specific
-
 `README.md` is its public page (GitHub, Marketplace): only user-facing content goes there, internals are here
 
 ## Tech summary
