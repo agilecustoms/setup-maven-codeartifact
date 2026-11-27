@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.5.7](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.5.6...v2.5.7) (2026-11-27)
+
+### Documentation
+
+* AGENTS.md w/o pointer to shared rules, implicit by directory hierarchy ([a84014a](https://github.com/agilecustoms/setup-maven-codeartifact/commit/a84014a36050837ddcba94827789f790a8f1b5a1))
+* md reference-style links, grouped at the bottom [skip ci] ([db1682e](https://github.com/agilecustoms/setup-maven-codeartifact/commit/db1682e7fb3e1988fdc5318fcf44dd4bfd7bb642))
+
+
 ## [2.5.6](https://github.com/agilecustoms/setup-maven-codeartifact/compare/v2.5.5...v2.5.6) (2026-11-26)
 
 ### Documentation
